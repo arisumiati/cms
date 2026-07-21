@@ -1,0 +1,4 @@
+"files.associations": {
+  "*.robot": "robotframework",
+  "*.resource": "robotframework"
+}
