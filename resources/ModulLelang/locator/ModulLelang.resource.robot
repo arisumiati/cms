@@ -10,16 +10,16 @@ Click Tambah Lelang
     Click Element  ${button_create}
 
 Click Simpan Lelang Tab Ringkasan
-    Wait Until Element Is Visible   ${simpan_tab_ringkasan}     timeout=10s
-    Wait Until Element Is Enabled   ${simpan_tab_ringkasan}     timeout=10s
+    Wait Until Element Is Visible    ${simpan_tab_ringkasan}      timeout=10s
+    Wait Until Element Is Enabled    ${simpan_tab_ringkasan}      timeout=10s
 
-    Execute JavaScript      var btn =   Array.from(document.querySelectorAll("div[role='dialog'] button")); var simpanBtn = btn.find(b => b.textContent.trim() === 'Simpan'); if(simpanBtn) { simpanBtn.click(); }
-    Sleep   1s
+    Execute JavaScript    var btn = Array.from(document.querySelectorAll("div[role='dialog'] button")); var simpanBtn = btn.find(b => b.textContent.trim() === 'Simpan'); if(simpanBtn) { simpanBtn.click(); }
+    Sleep                 1s
 
-    ${is_popup_visible}=    Run Keyword And Return Status   Element Should Be Visible
-    IF  not ${is_popup_visible}
-        Execute JavaScript  var btn =   Array.from(document.querySelectorAll("div[role='dialog'] button")); var simpanBtn = btn.find(b => b.textContent.trim() === 'Simpan'); if(simpanBtn) { simpanBtn.click(); }
-        Sleep   1s
+    ${is_popup_visible}=    Run Keyword And Return Status    Element Should Be Visible    ${btn_konfirmasi_simpan_ringkasan}
+    IF    not ${is_popup_visible}
+        Execute JavaScript    var btn = Array.from(document.querySelectorAll("div[role='dialog'] button")); var simpanBtn = btn.find(b => b.textContent.trim() === 'Simpan'); if(simpanBtn) { simpanBtn.click(); }
+        Sleep                 1s
     END
 
 Click Simpan Lelang Tab Objek Lelang
@@ -78,7 +78,7 @@ Input List Lelang Ringkasan
     Sleep   1s
 
     Press Keys      ${input_tanggal_mulai}  CTRL+a+BACKSPACE
-    Press Keys      ${input_tanggal_mulai}  07272026
+    Press Keys      ${input_tanggal_mulai}  07282026
     Press Keys      ${input_tanggal_mulai}  TAB
     Sleep   1s
 
@@ -92,7 +92,7 @@ Input List Lelang Ringkasan
     Sleep             1s
 
     Press Keys        ${input_tanggal_selesai}    CTRL+a+BACKSPACE
-    Press Keys        ${input_tanggal_selesai}    07282026
+    Press Keys        ${input_tanggal_selesai}    07292026
     Press Keys        ${input_tanggal_selesai}    TAB
     Sleep   1s
    
@@ -123,18 +123,15 @@ Input List Lelang Ringkasan
     Sleep                            1s
 
 Input Objek Lelang
-    # 1. Masuk ke Tab Objek Lelang
     Wait Until Element Is Visible    ${tab_objek_lelang}         timeout=10s
     Click Element                    ${tab_objek_lelang}
     Sleep                            1s
 
-    # 2. Buka Modal / Pop-up Tambah Objek Lelang
     Wait Until Element Is Visible    ${tambah_objek_lelang}      timeout=10s
     Click Element                    ${tambah_objek_lelang}
     Sleep                            2s
 
-    # 3. Pilih 10 Objek Lelang (Baris 1 sampai 10 pada Pop-up Modal)
-    FOR    ${index}    IN RANGE    1    11
+    FOR    ${index}    IN RANGE    1    3
         ${checkbox_row}=    Set Variable    xpath=(//div[@role='dialog'])[last()]//tbody/tr[${index}]//input[@type='checkbox']
         
         Wait Until Element Is Visible    ${checkbox_row}         timeout=10s
@@ -143,13 +140,11 @@ Input Objek Lelang
         Sleep                            0.3s
     END
 
-    # 4. Klik Tombol Tambahkan Objek Lelang
     Scroll Element Into View         ${tambahkan_objek_lelang}
     Wait Until Element Is Visible    ${tambahkan_objek_lelang}   timeout=10s
     Click Element                    ${tambahkan_objek_lelang}
     Sleep                            2s
 
-    # 5. Loop untuk Mengisi No Lot (1 sampai 10) pada Tabel
     ${total}=    Get Element Count    xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
 
     FOR    ${i}    IN RANGE    1    ${total + 1}
@@ -184,18 +179,22 @@ Input Admin Fee Per Objek Lelang
 
             # Pembersihan isi & pengisian Admin Fee
             Press Keys    ${admin_xpath}    CTRL+a+BACKSPACE
-            Input Text    ${admin_xpath}    500000
+            Input Text    ${admin_xpath}    ${admin_fee}
             Press Keys    ${admin_xpath}    TAB
             Sleep         0.3s
         END
     END
 
 Input Bidder
-    Wait Until Element Is Visible    ${tab_bidder}              timeout=10s
+    [Arguments]    ${bidder}=${bidder}    ${count}=1
+
+    # 1. Pindah ke Tab Bidder
+    Wait Until Element Is Visible    ${tab_bidder}               timeout=10s
     Scroll Element Into View         ${tab_bidder}
     Click Element                    ${tab_bidder}
     Sleep                            1s
 
+    # 2. Buka Modal Tambah Bidder & Cari Bidder
     Wait Until Element Is Visible    ${tambah_bidder}           timeout=10s
     Wait Until Element Is Enabled    ${tambah_bidder}           timeout=10s
     Click Element                    ${tambah_bidder}
@@ -205,28 +204,42 @@ Input Bidder
     Press Keys                       ${cari_bidder}             ${bidder}
     Sleep                            1s
 
+    # 3. Pilih & Tambahkan Bidder
     Wait Until Element Is Visible    ${pilih_bidder}            timeout=10s
     Click Element                    ${pilih_bidder}
 
     Wait Until Element Is Visible    ${tambahkan_bidder}        timeout=10s
     Click Element                    ${tambahkan_bidder}
-    Sleep                            1s
+    Sleep                            1.5s
 
-    Wait Until Element Is Visible    ${input_lot_aktif}         timeout=10s
-    Scroll Element Into View         ${input_lot_aktif}
-    Click Element                    ${input_lot_aktif}
-    Sleep                            1s
-
-    FOR    ${i}    IN RANGE    1    11
-        # Format {index} dengan nilai ${i} (menjadi teks '1', '2', dst)
-        ${opsi_lot}=    Format String    ${opsi_lot_by_index}    index=${i}
+    # 4. Outer Loop: Mengisi Lot Aktif per Baris Bidder
+    FOR    ${index}    IN RANGE    1    ${count} + 1
+        ${lot_dropdown_xpath}=       Set Variable    xpath=(//table//tbody/tr[${index}]//div[@role='group' and @type='button'])
         
-        Wait Until Element Is Visible    ${opsi_lot}            timeout=5s
-        Click Element                    ${opsi_lot}
-        Sleep                            0.3s
+        Wait Until Page Contains Element    ${lot_dropdown_xpath}    timeout=5s
+        Scroll Element Into View            ${lot_dropdown_xpath}
+        
+        # Buka Dropdown Popover Lot Baris Ke-N
+        ${lot_el}=                          Get Web Element           ${lot_dropdown_xpath}
+        Execute Javascript                  arguments[0].click();     ARGUMENTS    ${lot_el}
+        Sleep                               0.5s
+
+        # Inner Loop: Ambil dan Centang SEMUA Opsi Lot Aktif yang Muncul
+        Wait Until Page Contains Element    ${opsi_lot_aktif}         timeout=5s
+        ${all_lot_options}=                 Get Web Elements          ${opsi_lot_aktif}
+
+        FOR    ${opt}    IN    @{all_lot_options}
+            Execute Javascript              arguments[0].click();     ARGUMENTS    ${opt}
+            Sleep                           0.2s
+        END
+
+        # Tutup Popover Dropdown Lot Setelah Semua Tercentang
+        Press Keys                          NONE                      ESCAPE
+        Sleep                               0.5s
     END
 
-    Click Element                    ${input_lot_aktif}
+    # 5. Lepas Fokus Kursor & Sync State ke React (Aman Tanpa Menutup Modal Utama)
+    Execute JavaScript               document.activeElement.blur();
     Sleep                            1s
 
 Input Group
@@ -252,11 +265,20 @@ Input Group
     Sleep                           1s
 
 Edit Lelang
-    Input Text  ${cari_id_lelang}  ${id_lelang}
-    Sleep    3s
-    Click Element  ${klik_view_lelang}
-    Sleep    3s
-    Click Element  ${edit_lelang}
+    [Arguments]    ${id}=${id_lelang}
+    
+    Wait Until Element Is Visible    ${input_search_list_lelang}    timeout=30s
+    Press Keys                       ${input_search_list_lelang}    CTRL+a+BACKSPACE
+    Input Text                       ${input_search_list_lelang}    ${id}
+    Sleep                            1.5s
+    
+    Wait Until Element Is Visible    ${btn_action_dropdown_row1}    timeout=10s
+    Click Element                    ${btn_action_dropdown_row1}
+    Sleep                            0.5s
+    
+    Wait Until Element Is Visible    ${btn_menu_edit}               timeout=5s
+    Click Element                    ${btn_menu_edit}
+    Sleep                            1.5s
 
 Edit List Lelang Ringkasan
     ${tommorow}=    Get Current Date    result_format=%Y-%m-%d    increment=+2 day
@@ -391,7 +413,7 @@ Input Multiple Bidders
     Wait Until Element Is Visible    ${cari_bidder}       timeout=10s
     Press Keys                       ${cari_bidder}       CTRL+a+BACKSPACE
     Press Keys                       ${cari_bidder}       ${bidder}
-    Sleep                            1.5s                 # Jeda agar tabel ter-filter
+    Sleep                            1.5s                
 
     FOR    ${index}    IN RANGE    1    ${count} + 1
         ${cb_row_xpath}=    Set Variable    xpath=(//tbody//tr[${index}]//input[@type='checkbox'])
@@ -412,18 +434,15 @@ Input Multiple Bidders
         
         Wait Until Page Contains Element    ${lot_dropdown_xpath}    timeout=5s
         
-        # 1. Buka dropdown menggunakan JS Click agar tidak terhalang popover lain
         ${lot_el}=                          Get Web Element           ${lot_dropdown_xpath}
         Execute Javascript                  arguments[0].click();     ARGUMENTS    ${lot_el}
         Sleep                               0.5s
 
-        # 2. Klik Opsi '1' dari popover yang muncul
         Wait Until Element Is Visible       ${opsi_lot_aktif}         timeout=5s
         ${opsi_el}=                         Get Web Element           ${opsi_lot_aktif}
         Execute Javascript                  arguments[0].click();     ARGUMENTS    ${opsi_el}
         Sleep                               0.3s
 
-        # 3. Tekan ESCAPE untuk menutup popover agar tidak menghalangi baris di bawahnya
         Press Keys                          NONE                      ESCAPE
         Sleep                               0.3s
     END
@@ -513,3 +532,358 @@ Go To Edit Objek Bidder
     Wait Until Element Is Visible    ${tab_bidder}            timeout=10s
     Click Element                    ${tab_bidder}
     Sleep                            1s
+
+Verify Auction ID Field Is Disabled
+    Wait Until Element Is Visible       ${input_lelang_id}            timeout=10s
+    Scroll Element Into View            ${input_lelang_id}
+
+    Element Should Be Disabled          ${input_lelang_id}
+
+Edit Data Tab Ringkasan
+    Wait Until Element Is Visible    ${tab_ringkasan}                 timeout=10s
+    Scroll Element Into View         ${tab_ringkasan}
+    Click Element                    ${tab_ringkasan}
+    Sleep                            1s
+
+    # Input & Trigger Blur/Change via TAB Key
+    Wait Until Element Is Visible    ${edit_nama_judulLelang}         timeout=10s    
+    Press Keys                       ${edit_nama_judulLelang}         CTRL+a+BACKSPACE    
+    Input Text                       ${edit_nama_judulLelang}         ${edit_nama_lelang}
+    Press Keys                       ${edit_nama_judulLelang}         TAB
+
+    Wait Until Element Is Visible    ${edit_admin_fee}                timeout=10s    
+    Press Keys                       ${edit_admin_fee}                CTRL+a+BACKSPACE    
+    Input Text                       ${edit_admin_fee}                ${edit_fee}
+    Press Keys                       ${edit_admin_fee}                TAB
+
+    Wait Until Element Is Visible    ${edit_tanggal_mulai}            timeout=10s    
+    Press Keys                       ${edit_tanggal_mulai}            CTRL+a+BACKSPACE    
+    Input Text                       ${edit_tanggal_mulai}            ${edit_tgl_mulai}
+    Press Keys                       ${edit_tanggal_mulai}            TAB
+
+    Wait Until Element Is Visible    ${edit_waktu_Updatemulai}        timeout=10s    
+    Press Keys                       ${edit_waktu_Updatemulai}        CTRL+a+BACKSPACE    
+    Input Text                       ${edit_waktu_Updatemulai}        ${edit_waktu_mulai}
+    Press Keys                       ${edit_waktu_Updatemulai}        TAB
+
+    Wait Until Element Is Visible    ${edit_tanggal_selesai}          timeout=10s    
+    Press Keys                       ${edit_tanggal_selesai}          CTRL+a+BACKSPACE    
+    Input Text                       ${edit_tanggal_selesai}          ${edit_tgl_selesai}
+    Press Keys                       ${edit_tanggal_selesai}          TAB
+
+    Wait Until Element Is Visible    ${edit_waktu_Updateselesai}      timeout=10s    
+    Press Keys                       ${edit_waktu_Updateselesai}      CTRL+a+BACKSPACE    
+    Input Text                       ${edit_waktu_Updateselesai}      ${edit_waktu_selesai}
+    Press Keys                       ${edit_waktu_Updateselesai}      TAB
+    Sleep                            1s
+
+Edit Data Tab Objek Lelang
+    Wait Until Element Is Visible    ${tab_objek_lelang}             timeout=10s
+    Scroll Element Into View         ${tab_objek_lelang}
+    Click Element                    ${tab_objek_lelang}
+    Sleep                            1s
+
+    # 1. Hapus Objek Lelang Baris 1
+    Wait Until Page Contains Element    xpath=//table//tbody/tr      timeout=10s
+    Wait Until Page Contains Element    ${btn_delete_objek_row1}     timeout=10s
+    Scroll Element Into View            ${btn_delete_objek_row1}
+    ${delete_el}=                       Get Web Element              ${btn_delete_objek_row1}
+    Execute Javascript                  arguments[0].click();        ARGUMENTS    ${delete_el}
+    Sleep                               1s
+
+    Wait Until Element Is Visible       ${btn_konfirmasi_hapus_objek}    timeout=5s
+    Click Element                       ${btn_konfirmasi_hapus_objek}
+    Sleep                               1s
+
+    # 2. Tambah Objek Lelang Baru
+    Wait Until Element Is Visible    ${tambah_objek_lelang}          timeout=10s
+    Click Element                    ${tambah_objek_lelang}
+    Sleep                            2s
+
+    ${checkbox_row1}=    Set Variable    xpath=(//div[@role='dialog'])[last()]//tbody/tr[1]//input[@type='checkbox']
+    Wait Until Element Is Visible    ${checkbox_row1}                timeout=10s
+    Click Element                    ${checkbox_row1}
+    Sleep                            0.5s
+
+    Scroll Element Into View         ${tambahkan_objek_lelang}
+    Click Element                    ${tambahkan_objek_lelang}
+    Sleep                            2s
+
+    # 3. Hitung Max Lot & Tentukan Lot Berikutnya
+    ${lot_inputs}=                   Get Web Elements                xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
+    ${max_lot}=                      Set Variable                    0
+
+    FOR    ${el}    IN    @{lot_inputs}
+        ${val}=                      Get Value                       ${el}
+        IF    '${val}' != '' and ${val} > ${max_lot}
+            ${max_lot}=              Set Variable                    ${val}
+        END
+    END
+
+    ${next_lot}=                     Evaluate                        ${max_lot} + 1
+
+    # 4. CARA 1: SIMULASI KETIKAN NATIVE MURNI SELENIUM
+    ${lot_last_xpath}=               Set Variable                    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[last()]
+    Wait Until Element Is Visible    xpath=${lot_last_xpath}         timeout=10s
+    Scroll Element Into View         xpath=${lot_last_xpath}
+
+    # Focus dan bersihkan input
+    Click Element                    xpath=${lot_last_xpath}
+    Press Keys                       xpath=${lot_last_xpath}         CTRL+a+BACKSPACE
+    Sleep                            0.2s
+
+    # Ketik nilai lot karakter demi karakter
+    Press Keys                       xpath=${lot_last_xpath}         ${next_lot}
+    Sleep                            0.3s
+
+    # Pemicu utama event Blur/Change di React Form State
+    Press Keys                       xpath=${lot_last_xpath}         TAB
+    Sleep                            0.5s
+
+    # 5. Scroll Horizontal & Centang Checkbox Free Admin Fee
+    Execute Javascript               var el = document.querySelector("table").parentElement; el.scrollLeft = el.scrollWidth;
+    Sleep                            0.5s
+
+    ${cb_free_admin_last}=           Set Variable                    xpath=(//table//tbody/tr)[last()]/td[position()=last()-2]//input[@type='checkbox']
+    Wait Until Page Contains Element    ${cb_free_admin_last}        timeout=10s
+    ${el_cb}=                        Get Web Element                 ${cb_free_admin_last}
+
+    Execute Javascript               arguments[0].scrollIntoView({inline: 'center', block: 'center'});    ARGUMENTS    ${el_cb}
+    Sleep                            0.5s
+
+    Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_cb}
+    Sleep                            1s
+
+    # 6. Pemicu Lepas Fokus dari Tabel Objek Lelang
+    Execute JavaScript               document.activeElement.blur();
+    Sleep                            1s
+
+Edit Data Tab Bidder
+    Wait Until Element Is Visible    ${tab_bidder}               timeout=10s
+    Scroll Element Into View         ${tab_bidder}
+    Click Element                    ${tab_bidder}
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${tambah_bidder}           timeout=10s
+    Wait Until Element Is Enabled    ${tambah_bidder}           timeout=10s
+    Click Element                    ${tambah_bidder}
+
+    Wait Until Element Is Visible    ${cari_bidder}             timeout=10s
+    Press Keys                       ${cari_bidder}             CTRL+a+BACKSPACE
+    Input Text                       ${cari_bidder}             ${bidder_baru}
+    Press Keys                       ${cari_bidder}             TAB
+    Sleep                            1s
+
+    Wait Until Page Contains Element    ${pilih_bidder_edit}     timeout=10s
+    Wait Until Element Is Visible       ${pilih_bidder_edit}     timeout=10s
+    Scroll Element Into View            ${pilih_bidder_edit}
+    Sleep                               0.5s
+
+    ${el_cb}=                           Get Web Element          ${pilih_bidder_edit}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_cb}
+    Sleep                               1s
+
+    Wait Until Element Is Visible    ${tambahkan_bidder}        timeout=10s
+    Click Element                    ${tambahkan_bidder}
+    Sleep                            1.5s
+
+    ${lot_dropdown_last}=            Set Variable    xpath=(//table//tbody/tr)[last()]//div[@role='group' and @type='button']
+    Wait Until Page Contains Element    ${lot_dropdown_last}    timeout=5s
+    
+    ${lot_el}=                       Get Web Element            ${lot_dropdown_last}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${lot_el}
+    Sleep                            0.5s
+
+    Wait Until Page Contains Element    ${opsi_lot_aktif}       timeout=5s
+    ${all_options}=                  Get Web Elements           ${opsi_lot_aktif}
+
+    FOR    ${opt}    IN    @{all_options}
+        Execute Javascript              arguments[0].click();    ARGUMENTS    ${opt}
+        Sleep                           0.2s
+    END
+
+    Press Keys                       NONE                       ESCAPE
+    Sleep                            0.5s
+
+    Execute JavaScript               document.activeElement.blur();
+    Sleep                            1s
+
+Edit Data Tab Ringkasan Persentase
+    Wait Until Element Is Visible    ${tab_ringkasan}               timeout=10s
+    Scroll Element Into View         ${tab_ringkasan}
+    Click Element                    ${tab_ringkasan}
+    Sleep                            1s
+
+    Wait Until Page Contains Element    ${radio_persentase}        timeout=10s
+    Scroll Element Into View            ${radio_persentase}
+    ${el_radio}=                        Get Web Element             ${radio_persentase}
+    Execute JavaScript                  arguments[0].click();       ARGUMENTS    ${el_radio}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${symbol_persen}            timeout=5s
+
+    Wait Until Element Is Visible    ${edit_admin_fee}              timeout=10s    
+    Press Keys                       ${edit_admin_fee}              CTRL+a+BACKSPACE    
+    Input Text                       ${edit_admin_fee}              ${persentase_fee}
+    Press Keys                       ${edit_admin_fee}              TAB
+    Sleep                            1s
+
+Uncheck Customer Regular Checkbox
+    Wait Until Element Is Visible    ${tab_ringkasan}               timeout=10s
+    Click Element                    ${tab_ringkasan}
+    Sleep                            1s
+
+    Wait Until Page Contains Element    ${checkbox_customer_regular}   timeout=10s
+    Scroll Element Into View            ${checkbox_customer_regular}
+
+    ${is_checked}=                      Run Keyword And Return Status    Checkbox Should Be Selected    ${checkbox_customer_regular}
+    IF    ${is_checked}
+        ${el_cb}=                       Get Web Element                  ${checkbox_customer_regular}
+        Execute JavaScript              arguments[0].click();            ARGUMENTS    ${el_cb}
+        Sleep                           0.5s
+    END
+
+    Execute JavaScript                  document.activeElement.blur();
+    Sleep                               0.5s
+
+Hapus Objek Lelang Baris Pertama
+    Wait Until Element Is Visible    ${tab_objek_lelang}             timeout=10s
+    Scroll Element Into View         ${tab_objek_lelang}
+    Click Element                    ${tab_objek_lelang}
+    Sleep                            1s
+
+    Wait Until Page Contains Element    xpath=//table//tbody/tr      timeout=10s
+    
+    Wait Until Page Contains Element    ${btn_delete_objek_row1}     timeout=10s
+    Scroll Element Into View            ${btn_delete_objek_row1}
+    ${delete_el}=                       Get Web Element              ${btn_delete_objek_row1}
+    Execute Javascript                  arguments[0].click();        ARGUMENTS    ${delete_el}
+    Sleep                               1s
+
+    Wait Until Element Is Visible       ${btn_konfirmasi_hapus_objek}    timeout=5s
+    Click Element                       ${btn_konfirmasi_hapus_objek}
+    Sleep                               1s
+
+    Execute JavaScript                  document.activeElement.blur();
+    Sleep                               1s
+
+Tambah Objek Lelang Baru
+    Wait Until Element Is Visible    ${tab_objek_lelang}             timeout=10s
+    Scroll Element Into View         ${tab_objek_lelang}
+    Click Element                    ${tab_objek_lelang}
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${tambah_objek_lelang}          timeout=10s
+    Click Element                    ${tambah_objek_lelang}
+    Sleep                            1.5s
+
+    Wait Until Page Contains Element    ${pilih_objek_lelang}        timeout=10s
+    ${cb_el}=                        Get Web Element                 ${pilih_objek_lelang}
+    Execute Javascript               arguments[0].click();           ARGUMENTS    ${cb_el}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${tambahkan_objek_lelang}      timeout=10s
+    Click Element                    ${tambahkan_objek_lelang}
+    Sleep                            2s
+
+    ${lot_inputs}=                   Get Web Elements                xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
+    ${max_lot}=                      Set Variable                    0
+
+    FOR    ${el}    IN    @{lot_inputs}
+        ${val}=                      Get Value                       ${el}
+        IF    '${val}' != '' and ${val} > ${max_lot}
+            ${max_lot}=              Set Variable                    ${val}
+        END
+    END
+
+    ${next_lot}=                     Evaluate                        ${max_lot} + 1
+
+    ${lot_last_xpath}=               Set Variable                    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[last()]
+    Wait Until Element Is Visible    xpath=${lot_last_xpath}         timeout=10s
+    Scroll Element Into View         xpath=${lot_last_xpath}
+
+    Click Element                    xpath=${lot_last_xpath}
+    Press Keys                       xpath=${lot_last_xpath}         CTRL+a+BACKSPACE
+    Sleep                            0.2s
+    Press Keys                       xpath=${lot_last_xpath}         ${next_lot}
+    Sleep                            0.3s
+    Press Keys                       xpath=${lot_last_xpath}         TAB
+    Sleep                            0.5s
+
+    Execute JavaScript               document.activeElement.blur();
+    Sleep                            1s
+
+Tambah Group Bidder Baru
+    Wait Until Element Is Visible       ${tab_bidder}       timeout=10s
+    Scroll Element Into View            ${tab_bidder}       
+    Click Element                       ${tab_bidder}
+    Sleep                               1s
+
+    Wait Until Element Is Visible       ${tambah_group}     timeout=10s       
+    Wait Until Element Is Enabled       ${tambah_group}     timeout=10s       
+    Click Element                       ${tambah_group}
+    Sleep                               1.5s
+
+    Wait Until Page Contains Element    ${pilih_kode_group_edit}     timeout=10s
+    Scroll Element Into View            ${pilih_kode_group_edit}
+    ${el_input}=                        Get Web Element          ${pilih_kode_group_edit}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_input}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${click_kode_group_edit}      timeout=10s
+    ${el_option}=                       Get Web Element          ${click_kode_group_edit}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_option}
+    Sleep                               0.5s
+
+    Wait Until Element Is Visible    ${tambahkan_group_edit}         timeout=10s
+    Click Element                    ${tambahkan_group_edit}
+    Sleep                            2s
+    
+    Execute JavaScript               document.activeElement.blur();
+    Sleep                            1s     
+
+Hapus Bidder Edit
+    Wait Until Element Is Visible    ${tab_bidder}                   timeout=10s
+    Scroll Element Into View         ${tab_bidder}
+    Click Element                    ${tab_bidder}
+    Sleep                            1s
+
+    Wait Until Page Contains Element    xpath=//table//tbody/tr      timeout=10s
+
+    Wait Until Page Contains Element    ${btn_delete_bidder_edit}         timeout=10s
+    Scroll Element Into View            ${btn_delete_bidder_edit}
+    ${delete_el}=                       Get Web Element              ${btn_delete_bidder_edit}
+    Execute Javascript                  arguments[0].click();        ARGUMENTS    ${delete_el}
+    Sleep                               1s
+
+    Wait Until Element Is Visible       ${btn_konfirmasi_hapus_bidder_edit}    timeout=5s
+    Click Element                       ${btn_konfirmasi_hapus_bidder_edit}
+    Sleep                               1s
+
+    Execute JavaScript                  document.activeElement.blur();
+    Sleep                               1s
+
+Batal Edit Lelang Dan Verifikasi Data Awal
+    Wait Until Element Is Visible    ${tab_ringkasan}               timeout=10s
+    Click Element                    ${tab_ringkasan}
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${edit_nama_judulLelang}       timeout=10s
+    ${nama_awal}=                    Get Value                       ${edit_nama_judulLelang}
+
+    Press Keys                       ${edit_nama_judulLelang}       CTRL+a+BACKSPACE
+    Input Text                       ${edit_nama_judulLelang}       ${cancel_nama_lelang}
+    Press Keys                       ${edit_nama_judulLelang}       TAB
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${btn_batal_edit}              timeout=10s
+    Scroll Element Into View         ${btn_batal_edit}
+    Click Element                    ${btn_batal_edit}
+    Sleep                            2s
+
+    Edit Lelang
+    Sleep    2s
+
+    Wait Until Element Is Visible    ${edit_nama_judulLelang}       timeout=10s
+    ${nama_sekarang}=                Get Value                       ${edit_nama_judulLelang}
+    Should Be Equal                  ${nama_awal}                    ${nama_sekarang}    

@@ -36,11 +36,11 @@ symbol_persen="xpath://*[normalize-space(text())='%']"
 checkbox_customer_regular="xpath=//label[contains(text(),'Lelang terbuka untuk customer Regular')]/preceding-sibling::input"
 
 #input objek lelang Free Admin Fee
-checkbox_free_admin="xpath=//table//tbody/tr[1]/td[count(//th[contains(.,'FREE ADMIN FEE')]/preceding-sibling::th)+1]//input[@type='checkbox']"
+checkbox_free_admin="xpath=(//table//tbody/tr)[last()]/td[position()=last()-2]//input[@type='checkbox']"
 admin_fee_container="xpath=//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/ancestor::table//tbody/tr[1]/td[position()=count(//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/preceding-sibling::th)+1]"
 
 #Checkbox Rekomendasi
-checkbox_rekomendasi = "xpath=//table//tbody/tr[1]/td[count(//th[contains(.,'REKOMENDASI')]/preceding-sibling::th)+1]"
+checkbox_rekomendasi ="xpath=//table//tbody/tr[1]/td[count(//th[contains(.,'REKOMENDASI')]/preceding-sibling::th)+1]"
 
 #tanggal selesai lebih awal dari tanggal mulai
 err_msg_invalid_schedule=" xpath://p[contains(@class,'text-danger') and contains(text(),'Waktu selesai harus lebih dari waktu mulai')]"
@@ -75,10 +75,10 @@ tambah_bidder="xpath:(//div[@role='dialog'])[last()]//button[contains(., 'Tambah
 cari_bidder="xpath:(//div[@role='dialog'])[last()]//input[contains(@placeholder, 'Search')]"
 pilih_bidder="(//tbody//tr[1]//input[@type='checkbox'])"
 tambahkan_bidder="xpath:(//div[@role='dialog'])[last()]//button[@data-slot='button' and normalize-space()='Simpan']"
-#input_lot_aktif="xpath=//div[@role='group' and @type='button']"
-#input_lot_aktif = "xpath=//button[.//span[text()='keyboard_arrow_down']] | //div[contains(@class, 'cursor-pointer')][.//span[text()='keyboard_arrow_down']]"
-opsi_lot_by_index = "xpath=(//div[contains(@class, 'popover') or contains(@class, 'content') or @role='listbox']//span[text()='{index}'] | //div[contains(@class, 'popover') or contains(@class, 'content')]//div[text()='{index}'])[last()]"
-#create tab bidder group
+input_lot_aktif = "xpath=(//div[@role='dialog'])[last()]//tbody/tr[1]//div[@role='group' and @type='button'] | (//div[@role='dialog'])[last()]//tbody/tr[1]//button[.//span[text()='keyboard_arrow_down']]"
+
+# Create tab group
+opsi_lot_by_index = "xpath=(//div[@role='dialog' and @data-state='open']//div[@role='option'])[{index}]"
 tambah_group="xpath://button[@data-slot='modal-trigger']//span[text()='Group']"
 pilih_kode_group="xpath://input[@value='Pilih Kode Group']"
 click_kode_group="xpath://span[normalize-space(text())='ASL Lelang Laptop']"
@@ -106,6 +106,9 @@ admin_fee_per_objek="500000"
 #create tab bidder
 bidder="00000"
 
+#dropdown pemilihan lot aktif
+opsi_lot_aktif = "xpath=//div[@data-radix-popper-content-wrapper]//div[@role='option']"
+
 #edit lelang
 cari_id_lelang="xpath://input[@placeholder='Search']"
 klik_view_lelang="xpath://span[text()='View']"
@@ -124,23 +127,50 @@ pilih_waktu_wanpes="xpath://input[@type='date' and @min='2025-12-14' and @max='2
 
 
 #value test data List Lelang
-#edit ringkasan
-edit_nama_lelang="Edit Automation"
-edit_cabang="xpath:xpath://div[text()='Banjarmasin']"
-edit_admin_fee="200000"
-edit_harga_nipl="2000000"
-edit_input_tanggal_mulai="xpath://input[@type='date' and @placeholder='Ketik Tanggal Mulai Lelang']"
-edit_waktu_mulai_lelang="11:00"
-edit_waktu_selesai_lelang="21:00"
-edit_durasi_perslot="02:00"
-edit_waktu_tambahan="02:00"
-edit_kelipatan_harga_bid="500000"
-edit_waktu_wanpres="13:00"
-
 
 #value pencarian
-id_lelang="00003291"
+id_lelang="00004190"
 
 #Free Admin Fee
 checkbox_free_admin=" xpath=//tr[contains(., 'FREE ADMIN FEE')]//input[@type='checkbox']"
 input_admin_fee="xpath://th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/ancestor::table//tbody/tr[1]/td[position()=count(//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/preceding-sibling::th)+1]//input[@inputmode='numeric' or @type='text']"
+
+#Input Lelang ID(Disabled)
+tab_ringkasan = (
+    "xpath=//button[@role='tab' and (text()='Ringkasan' or .='Ringkasan')]"
+)
+edit_nama_judulLelang = "xpath=//input[@name='auctionName']"
+edit_admin_fee = "xpath=//input[@name='adminFee' or @name='bidderAdminFee' or @placeholder='Ketik Admin Fee Bidder']"
+edit_tanggal_mulai = "xpath=//input[@name='auctionStart']"
+edit_waktu_Updatemulai = "xpath=//input[@name='auctionStartTime']"
+edit_tanggal_selesai = "xpath=//input[@name='auctionEnd']"
+edit_waktu_Updateselesai = (
+    "xpath=//input[@name='auctionEndTime']"  
+)
+
+edit_nama_lelang = "Testing Update"
+edit_tgl_mulai = "07282026"
+edit_waktu_mulai = "1200PM"
+edit_tgl_selesai = "07292026"
+edit_waktu_selesai = "1100PM"
+edit_fee = "140000"
+
+#input Bidder Baru
+bidder_baru="00000005"
+pilih_bidder_edit="xpath=(//div[@role='dialog'])[last()]//table//tbody/tr[1]//input[@type='checkbox']"
+
+#edit Persentase
+persentase_fee="3"
+
+#Create Tab Bidder Baru Fitur  Edit
+tambahkan_group_edit="xpath:(//div[@role='dialog']//button[normalize-space()='Simpan'])[last()]"
+pilih_kode_group_edit="xpath=//input[@value='Pilih Kode Group']/ancestor::div[@type='button']"
+click_kode_group_edit="xpath=//div[@role='dialog' and @data-state='open']//button[.//span[text()='JKT999']]"
+
+#hapus Bidder Di Fitur Edit
+btn_delete_bidder_edit="xpath=//button[.//span[text()='delete']]"
+btn_konfirmasi_hapus_bidder_edit="xpath=//button[normalize-space(text())='Ya, Konfirmasi']"
+
+#batal Edit lelang
+btn_batal_edit ="xpath=//button[normalize-space(text())='Batal']"
+cancel_nama_lelang="Testing Cancel"
