@@ -168,7 +168,6 @@ Input Admin Fee Per Objek Lelang
     ${total}=    Get Element Count    xpath=//th[normalize-space()='ADMIN FEE']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='ADMIN FEE']/preceding-sibling::th)+1]//input
 
     FOR    ${i}    IN RANGE    1    ${total + 1}
-        # Tambahkan tanda kurung (...) pada XPath agar indexing [${i}] bekerja presisi
         ${admin_xpath}=    Set Variable    xpath=(//th[normalize-space()='ADMIN FEE']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='ADMIN FEE']/preceding-sibling::th)+1]//input)[${i}]
         
         ${input_exist}=    Run Keyword And Return Status    Element Should Be Visible    ${admin_xpath}    timeout=2s
@@ -188,13 +187,11 @@ Input Admin Fee Per Objek Lelang
 Input Bidder
     [Arguments]    ${bidder}=${bidder}    ${count}=1
 
-    # 1. Pindah ke Tab Bidder
     Wait Until Element Is Visible    ${tab_bidder}               timeout=10s
     Scroll Element Into View         ${tab_bidder}
     Click Element                    ${tab_bidder}
     Sleep                            1s
 
-    # 2. Buka Modal Tambah Bidder & Cari Bidder
     Wait Until Element Is Visible    ${tambah_bidder}           timeout=10s
     Wait Until Element Is Enabled    ${tambah_bidder}           timeout=10s
     Click Element                    ${tambah_bidder}
@@ -204,7 +201,6 @@ Input Bidder
     Press Keys                       ${cari_bidder}             ${bidder}
     Sleep                            1s
 
-    # 3. Pilih & Tambahkan Bidder
     Wait Until Element Is Visible    ${pilih_bidder}            timeout=10s
     Click Element                    ${pilih_bidder}
 
@@ -212,19 +208,16 @@ Input Bidder
     Click Element                    ${tambahkan_bidder}
     Sleep                            1.5s
 
-    # 4. Outer Loop: Mengisi Lot Aktif per Baris Bidder
     FOR    ${index}    IN RANGE    1    ${count} + 1
         ${lot_dropdown_xpath}=       Set Variable    xpath=(//table//tbody/tr[${index}]//div[@role='group' and @type='button'])
         
         Wait Until Page Contains Element    ${lot_dropdown_xpath}    timeout=5s
         Scroll Element Into View            ${lot_dropdown_xpath}
         
-        # Buka Dropdown Popover Lot Baris Ke-N
         ${lot_el}=                          Get Web Element           ${lot_dropdown_xpath}
         Execute Javascript                  arguments[0].click();     ARGUMENTS    ${lot_el}
         Sleep                               0.5s
 
-        # Inner Loop: Ambil dan Centang SEMUA Opsi Lot Aktif yang Muncul
         Wait Until Page Contains Element    ${opsi_lot_aktif}         timeout=5s
         ${all_lot_options}=                 Get Web Elements          ${opsi_lot_aktif}
 
@@ -233,12 +226,10 @@ Input Bidder
             Sleep                           0.2s
         END
 
-        # Tutup Popover Dropdown Lot Setelah Semua Tercentang
         Press Keys                          NONE                      ESCAPE
         Sleep                               0.5s
     END
 
-    # 5. Lepas Fokus Kursor & Sync State ke React (Aman Tanpa Menutup Modal Utama)
     Execute JavaScript               document.activeElement.blur();
     Sleep                            1s
 
@@ -337,21 +328,17 @@ Input Invalid Schedule End Time Earlier Than Start Time
     Element Should Be Visible        ${err_msg_locator}
 
 Verify Free Admin Fee Overrides Admin Fee To Zero
-    # 1. Ambil Web Element untuk sel TD kolom FREE ADMIN FEE di baris 1
     ${cb_td_xpath}=                     Set Variable              xpath=//table//tbody/tr[1]/td[count(//th[contains(.,'FREE ADMIN FEE')]/preceding-sibling::th)+1]
     Wait Until Page Contains Element    ${cb_td_xpath}            timeout=10s
     ${cb_td_el}=                        Get Web Element           ${cb_td_xpath}
 
-    # 2. Scroll Horizontal via TD
     Execute Javascript                  arguments[0].scrollIntoView({behavior: 'instant', block: 'nearest', inline: 'end'});    ARGUMENTS    ${cb_td_el}
     Sleep                               0.5s
 
-    # 3. Klik Checkbox FREE ADMIN FEE
     ${cb_input_el}=                     Get Web Element           ${cb_td_xpath}//*[self::input or self::label or contains(@class,'checkbox')]
     Execute Javascript                  arguments[0].click();     ARGUMENTS    ${cb_input_el}
     Sleep                               1.5s
 
-    # 4. Verifikasi Nilai '0' atau 'Rp 0' langsung dari container
     ${admin_fee_text}=                  Get Text                  ${admin_fee_container}
     Should Contain                      ${admin_fee_text}         0
 
@@ -379,7 +366,6 @@ Input Objek Lelang Free Admin
         Sleep                            0.3s
     END
 
-    # --- CENTANG FREE ADMIN FEE ---
     ${el_cb}=                Get Web Element           ${checkbox_free_admin}
     Execute Javascript       arguments[0].click();     ARGUMENTS    ${el_cb}
     Sleep                    1s
@@ -466,23 +452,19 @@ Delete Objek Lelang Row And Confirm
 Go To Edit Objek Lelang
     [Arguments]    ${id}=${lelang_id}
     
-    # 1. Search Lelang ID
     Wait Until Element Is Visible    ${input_search_list_lelang}    timeout=30s
     Press Keys                       ${input_search_list_lelang}    CTRL+a+BACKSPACE
     Input Text                       ${input_search_list_lelang}    ${id}
     Sleep                            1.5s
     
-    # 2. Klik Arrow Down (Dropdown Aksi Baris Pertama)
     Wait Until Element Is Visible    ${btn_action_dropdown_row1}    timeout=10s
     Click Element                    ${btn_action_dropdown_row1}
     Sleep                            0.5s
     
-    # 3. Klik Menu Edit
     Wait Until Element Is Visible    ${btn_menu_edit}               timeout=5s
     Click Element                    ${btn_menu_edit}
     Sleep                            1.5s
     
-    # 4. Pindah ke Tab Objek Lelang
     Wait Until Element Is Visible    ${tab_objek_lelang}            timeout=10s
     Click Element                    ${tab_objek_lelang}
     Sleep                            1s
@@ -509,23 +491,19 @@ Delete Objek Bidder Row And Confirm
 Go To Edit Objek Bidder
     [Arguments]    ${id}=${lelang_id}
     
-    # 1. Search Lelang ID
     Wait Until Element Is Visible    ${input_search_list_lelang}    timeout=30s
     Press Keys                       ${input_search_list_lelang}    CTRL+a+BACKSPACE
     Input Text                       ${input_search_list_lelang}    ${id}
     Sleep                            1.5s
     
-    # 2. Klik Arrow Down (Dropdown Aksi Baris Pertama)
     Wait Until Element Is Visible    ${btn_action_dropdown_row1}    timeout=10s
     Click Element                    ${btn_action_dropdown_row1}
     Sleep                            0.5s
     
-    # 3. Klik Menu Edit
     Wait Until Element Is Visible    ${btn_menu_edit}               timeout=5s
     Click Element                    ${btn_menu_edit}
     Sleep                            1.5s
     
-    # 4. Pindah ke Tab Objek Lelang
     Wait Until Element Is Visible    ${tab_bidder}            timeout=10s
     Click Element                    ${tab_bidder}
     Sleep                            1s
@@ -542,7 +520,6 @@ Edit Data Tab Ringkasan
     Click Element                    ${tab_ringkasan}
     Sleep                            1s
 
-    # Input & Trigger Blur/Change via TAB Key
     Wait Until Element Is Visible    ${edit_nama_judulLelang}         timeout=10s    
     Press Keys                       ${edit_nama_judulLelang}         CTRL+a+BACKSPACE    
     Input Text                       ${edit_nama_judulLelang}         ${edit_nama_lelang}
@@ -580,7 +557,6 @@ Edit Data Tab Objek Lelang
     Click Element                    ${tab_objek_lelang}
     Sleep                            1s
 
-    # 1. Hapus Objek Lelang Baris 1
     Wait Until Page Contains Element    xpath=//table//tbody/tr      timeout=10s
     Wait Until Page Contains Element    ${btn_delete_objek_row1}     timeout=10s
     Scroll Element Into View            ${btn_delete_objek_row1}
@@ -592,7 +568,6 @@ Edit Data Tab Objek Lelang
     Click Element                       ${btn_konfirmasi_hapus_objek}
     Sleep                               1s
 
-    # 2. Tambah Objek Lelang Baru
     Wait Until Element Is Visible    ${tambah_objek_lelang}          timeout=10s
     Click Element                    ${tambah_objek_lelang}
     Sleep                            2s
@@ -606,7 +581,6 @@ Edit Data Tab Objek Lelang
     Click Element                    ${tambahkan_objek_lelang}
     Sleep                            2s
 
-    # 3. Hitung Max Lot & Tentukan Lot Berikutnya
     ${lot_inputs}=                   Get Web Elements                xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
     ${max_lot}=                      Set Variable                    0
 
@@ -619,25 +593,20 @@ Edit Data Tab Objek Lelang
 
     ${next_lot}=                     Evaluate                        ${max_lot} + 1
 
-    # 4. CARA 1: SIMULASI KETIKAN NATIVE MURNI SELENIUM
     ${lot_last_xpath}=               Set Variable                    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[last()]
     Wait Until Element Is Visible    xpath=${lot_last_xpath}         timeout=10s
     Scroll Element Into View         xpath=${lot_last_xpath}
 
-    # Focus dan bersihkan input
     Click Element                    xpath=${lot_last_xpath}
     Press Keys                       xpath=${lot_last_xpath}         CTRL+a+BACKSPACE
     Sleep                            0.2s
 
-    # Ketik nilai lot karakter demi karakter
     Press Keys                       xpath=${lot_last_xpath}         ${next_lot}
     Sleep                            0.3s
 
-    # Pemicu utama event Blur/Change di React Form State
     Press Keys                       xpath=${lot_last_xpath}         TAB
     Sleep                            0.5s
 
-    # 5. Scroll Horizontal & Centang Checkbox Free Admin Fee
     Execute Javascript               var el = document.querySelector("table").parentElement; el.scrollLeft = el.scrollWidth;
     Sleep                            0.5s
 
@@ -651,7 +620,6 @@ Edit Data Tab Objek Lelang
     Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_cb}
     Sleep                            1s
 
-    # 6. Pemicu Lepas Fokus dari Tabel Objek Lelang
     Execute JavaScript               document.activeElement.blur();
     Sleep                            1s
 
