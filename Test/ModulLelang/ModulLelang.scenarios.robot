@@ -54,33 +54,6 @@ Execute Login Scenario
 #     Click Pop Up Ya Mengerti
 #     Sleep    3s
 
-# Verify Admin Fee Auto Set To Zero When Free Admin Fee Is Checked
-#    [Documentation]    Skenario: Memastikan Admin Fee otomatis ter-override dari Rp 250.000 menjadi 0 saat Free Admin Fee dicentang.
-#    Sleep    3s
-#   Go To    ${BASE_URL}lelang/list-lelang    
-#    Click Tambah Lelang
-#    
-#    Input List Lelang Ringkasan
-#    Sleep    1s
-#   
-#    Input Objek Lelang
-#    Sleep    1s
-#
-#    Verify Free Admin Fee Overrides Admin Fee To Zero
-#
-#    Click Simpan Lelang Tab Objek Lelang
-#    Sleep    2s
-#    
-#    Input Bidder
-#    Sleep    2s
-#
-#   Input Group
-#    Sleep    2s
-#    
-#    Click Simpan Lelang Tab Ringkasan
-#    Click Pop Up Konfirmasi
-#    Sleep    4s
-
 # Verify Objek Lelang with Multiple Bidder
 #    [Documentation]    Skenario Positive: Berhasil Menambahkan Multiple Bidder
 #    Sleep    5s
@@ -372,17 +345,131 @@ Execute Login Scenario
 #    Click Simpan Lelang Tab Ringkasan
 #    Click Pop Up Konfirmasi
 #    Sleep   3s
+
+# Verify Canceling Edit Action Discards All Unsaved Changes
+#    [Documentation]     TC-ED-UI-001 Verify Canceling Edit Action Discards All Unsaved Changes
+#    Sleep    5s
+#    Go To    ${BASE_URL}lelang/list-lelang    
+#
+#    Edit Lelang
+#    Sleep    2s
+#
+#    Batal Edit Lelang Dan Verifikasi Data Awal
+#
+#    Wait Until Element Is Visible    ${btn_batal_edit}              timeout=10s
+#    Click Element                    ${btn_batal_edit}
+#    Sleep    2s
+
+# Verify E2E Filter Kombinasi Valid (Happy Path)
+#    [Documentation]     TC_FLT_002 Filter Lelang
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#    
+#    Click Filter
+#    Input Filter
+#    Sleep   6s
+
+# Verify Filter Berdasarkan Single Field Lelang ID
+#    [Documentation]    TC_FLT_003 Filter Berdasarkan Single Field (Lelang ID)
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#
+#    Click Filter
+#    Input Filter Berdasarkan lelang_id
+#    Sleep   6s
+
+# Verify Filter Berdasarkan Pencarian Partial/Substring Nama Lelang
+#    [Documentation]    TC_FLT_004 Pencarian Partial/Substring Nama Lelang
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#
+#    Click Filter
+#    Input Filter Berdasarkan Nama Lelang Partial
+#    Sleep   6s
+
+# Verify Reset Filter menggunakan Tombol Hapus
+#    [Documentation]    TC_FLT_006 Reset Filter menggunakan Tombol Hapus
+#    Sleep    5s
+#    Go To    ${BASE_URL}lelang/list-lelang    
+#
+#    Click Filter
+#    Sleep    2s
+#
+#    Reset Filter Lelang Dan Verifikasi Data Awal
+#
+#    Wait Until Element Is Visible    ${filter_btn_hapus}              timeout=10s
+#    Click Element                    ${filter_btn_hapus}
+#    Sleep    2s
+
+# Verify Filter Data Tidak Ditemukan (Empty State)
+#    [Documentation]    TC_FLT_008 Filter Data Tidak Ditemukan (Empty State)
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#
+#    Click Filter
+#    Input Invalid Filter Berdasarkan lelang_id
+#    Sleep   6s
+
+# Verify Filter Input Karakter Spesial / Injection Check
+#    [Documentation]    TC_FLT_009 Input Karakter Spesial / Injection Check
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#
+#    Click Filter
+#   Input Karakter Spesial Nama Lelang
+#    Sleep   6s
+
+# Verify Pengujian UAT / Responsive Modal UI
+#    [Documentation]    TC_FLT_011 Pengujian UAT / Responsive Modal UI
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#
+#    Click Filter
+#    Verifikasi Tampilan UI Modal Filter
+#    Sleep   5s
+
+# Verify Tutup Modal Tanpa Menerapkan Filter
+#    [Documentation]    TC_FLT_012 Tutup Modal Tanpa Menerapkan Filter
+#    Sleep    5s
+#    Go To    ${BASE_URL}lelang/list-lelang    
+#
+#    Click Filter
+#    Sleep    2s
+#
+#    Reset Filter Lelang Dan Verifikasi Data Awal
+#
+#    Wait Until Element Is Visible    ${filter_btn_hapus}              timeout=10s
+#    Click Element                    ${filter_btn_hapus}
+#    Sleep    2s
+
+# Verify Tutup Modal Tanpa Menerapkan Filter
+#    [Documentation]    TC_FLT_012 Tutup Modal Tanpa Menerapkan Filter
+#    Sleep    5s
+#    Go To    ${BASE_URL}lelang/list-lelang    
+#
+#    Click Filter
+#    Sleep    2s
+#
+#    Reset Filter Lelang Dan Verifikasi Data Awal
+#
+#    Wait Until Element Is Visible    ${filter_btn_hapus}              timeout=10s
+#    Click Element                    ${filter_btn_hapus}
+#    Sleep    2s
+
+# Verify Filter Rentang Waktu (Waktu Mulai Lelang)
+#    [Documentation]    TC_FLT_005 Filter Rentang Waktu (Waktu Mulai Lelang)
+#    Sleep   5s
+#    Go To   ${BASE_URL}lelang/list-lelang
+#
+#    Click Filter
+#    Input Filter Berdasarkan Waktu Mulai Lelang
+#    Sleep   6s
 *** Test Cases ***
-Verify Canceling Edit Action Discards All Unsaved Changes
-    [Documentation]     TC-ED-UI-001 Verify Canceling Edit Action Discards All Unsaved Changes
-    Sleep    5s
-    Go To    ${BASE_URL}lelang/list-lelang    
+Verify Filter dengan Waktu Wanpres Lelang
+    [Documentation]    TC_FLT_007 Filter dengan Waktu Wanpres Lelang
+    Sleep   5s
+    Go To   ${BASE_URL}lelang/list-lelang
 
-    Edit Lelang
-    Sleep    2s
-
-    Batal Edit Lelang Dan Verifikasi Data Awal
-
-    Wait Until Element Is Visible    ${btn_batal_edit}              timeout=10s
-    Click Element                    ${btn_batal_edit}
-    Sleep    2s
+    Click Filter
+    Input Filter Berdasarkan Waktu Wanpres Lelang
+    Sleep   6s
