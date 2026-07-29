@@ -54,7 +54,7 @@ btn_delete_bidder="xpath=//button[.//span[text()='delete']]"
 btn_konfirmasi_hapus_bidder = "xpath=//button[normalize-space(text())='Ya, Konfirmasi']"
 
 #Data Lelang ID
-lelang_id = "00004179"
+lelang_id = "00004201"
 input_search_list_lelang = "xpath=//input[contains(@placeholder, 'Search')]"
 btn_action_dropdown_row1="xpath=//button[@data-slot='dropdown-menu-trigger' or contains(@aria-label, 'aksi')]"
 btn_menu_edit = "xpath=//div[@role='menuitem'][.//span[text()='edit'] or contains(., 'edit')]"
@@ -104,7 +104,7 @@ waktu_wanpres="1100PM"
 admin_fee_per_objek="500000"
 
 #create tab bidder
-bidder="00000"
+bidder="00000005"
 
 #dropdown pemilihan lot aktif
 opsi_lot_aktif = "xpath=//div[@data-radix-popper-content-wrapper]//div[@role='option']"
@@ -124,12 +124,10 @@ pilih_waktu_tambahan="xpath://input[@value='P002.00']"
 pilih_kelipatan="xpath://input[@value='50.000']"
 pilih_tanggal_wanpes="xpath://input[@type='date' and @placeholder='Ketik Tanggal Wanpres']"
 pilih_waktu_wanpes="xpath://input[@type='date' and @min='2025-12-14' and @max='2026-01-31']"
-
-
-#value test data List Lelang
+input_lelang_id="//input[@name='auctionNumber']"
 
 #value pencarian
-id_lelang="00004190"
+id_lelang="00004214"
 
 #Free Admin Fee
 checkbox_free_admin=" xpath=//tr[contains(., 'FREE ADMIN FEE')]//input[@type='checkbox']"
@@ -138,7 +136,7 @@ input_admin_fee="xpath://th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]
 #Input Lelang ID(Disabled)
 tab_ringkasan = (
     "xpath=//button[@role='tab' and (text()='Ringkasan' or .='Ringkasan')]"
-)
+)   
 edit_nama_judulLelang = "xpath=//input[@name='auctionName']"
 edit_admin_fee = "xpath=//input[@name='adminFee' or @name='bidderAdminFee' or @placeholder='Ketik Admin Fee Bidder']"
 edit_tanggal_mulai = "xpath=//input[@name='auctionStart']"
@@ -149,9 +147,9 @@ edit_waktu_Updateselesai = (
 )
 
 edit_nama_lelang = "Testing Update"
-edit_tgl_mulai = "07282026"
-edit_waktu_mulai = "1200PM"
-edit_tgl_selesai = "07292026"
+edit_tgl_mulai = "07292026"
+edit_waktu_mulai = "1700PM"
+edit_tgl_selesai = "07302026"
 edit_waktu_selesai = "1100PM"
 edit_fee = "140000"
 
@@ -175,35 +173,8 @@ btn_konfirmasi_hapus_bidder_edit="xpath=//button[normalize-space(text())='Ya, Ko
 btn_batal_edit ="xpath=//button[normalize-space(text())='Batal']"
 cancel_nama_lelang="Testing Cancel"
 
-#Filter Lelang
-btn_filter="xpath=//button[@data-slot='popover-trigger' and contains(., 'Filter')]"
-filter_status_aktif_trigger = "xpath=//label[contains(text(),'Status Aktif')]/following-sibling::div//span[text()='keyboard_arrow_down']"
-filter_status_aktif_option  = "xpath=//div[@role='dialog' and @data-state='open']//button[.//span[text()='Aktif']]"
-filter_status_lelang_trigger = "xpath=//div[@role='dialog']//*[text()='Status Lelang']/following::div[@type='button'][1]"
-filter_status_lelang_option  = "xpath=//div[@role='dialog' and @data-state='open']//button[.//span[text()='Lelang belum Dimulai']]"
-filter_objek_lelang_trigger = "xpath=//div[@role='dialog']//*[text()='Objek Lelang']/following::div[@type='button'][1]"
-filter_objek_lelang_option  = "xpath=//div[@role='dialog' and @data-state='open']//button[.//span[text()='Electronic']]"
-filter_cabang_trigger = "xpath=//div[@role='dialog']//*[text()='Cabang']/following::div[@type='button'][1]"
-filter_cabang_option  = "xpath=//div[@role='dialog' and @data-state='open']//button[.//span[text()='Balikpapan']]"
-filter_tipe_lelang_trigger = "xpath=//div[@role='dialog']//*[text()='Tipe Lelang']/following::div[@type='button'][1]"
-filter_tipe_lelang_option  = "xpath=//div[@role='dialog' and @data-state='open']//button[.//span[text()='Time Auction Normal']]"
-filter_nama_lelang_input = "xpath=//input[contains(@placeholder, 'Nama Lelang')]"
-filter_lelang_id_input = "xpath=//div[@role='dialog']//input[@placeholder='Ketik Lelang ID']"
-filter_waktu_mulai_input ="xpath=//div[@role='dialog']//input[@type='datetime-local']"
-filter_waktu_wanpres_input="//input[@type='datetime-local' and @placeholder='Ketik Waktu Wanpres Lelang']"
-filter_btn_hapus = "xpath=//div[@role='dialog']//button[.//span[text()='Hapus']]"
-filter_btn_tampilkan = "xpath=//button[contains(., 'Tampilkan')]"
-
-nama_filter_lelang="Testing Lelang"
-nama_filter_lelang_partial="Honda"
-Invalid_filter_lelang_id="INVALID999"
-karakter_spesial_namaLelang="<script>alert(1)</script>"
-
-waktu_mulai_tanggal = "07282026"
-waktu_mulai_jam = "0500PM"
-
-waktu_wanpres_tanggal="07292026"
-waktu_wanpres_mulai="1100PM"
-
-#melakukan filter search berdasarkan lelang ID
-filter_lelangID="00004193"
+#Notifikasi
+toast_sukses_buat_lelang = "xpath=//li[@data-sonner-toast and contains(., 'Sukses membuat lelang')]"
+toast_sukses_update_objek_lelang = "xpath=//li[@data-sonner-toast and contains(., 'Sukses mengupdate objek lelang!')]"
+toast_sukses_update_bidder = "xpath=//li[@data-sonner-toast and contains(., 'Sukses mengupdate bidder!')]"
+toast_sukses_perbarui_data_lelang="xpath=//li[@data-sonner-toast and contains(., 'Berhasil memperbarui data lelang!')] "
