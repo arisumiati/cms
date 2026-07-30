@@ -75,6 +75,14 @@ Click Pop Up Konfirmasi notification Update Bidder
     
     Wait Until Element Is Visible    ${toast_sukses_update_bidder}    timeout=5s
 
+Click Pop Up Konfirmasi notification Bundle
+    Wait Until Element Is Visible       ${pop_up_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled       ${pop_up_konfirmasi}    timeout=10s
+    Scroll Element Into View    ${pop_up_konfirmasi}
+    Click Element               ${pop_up_konfirmasi}
+    
+    Wait Until Element Is Visible    ${toast_sukses_buat_bundle_manual}    timeout=5s
+
 Input List Lelang Ringkasan
 
     ${tommorow}=    Get Current Date    result_format=%Y-%m-%d    increment=+1 day
@@ -773,45 +781,43 @@ Tambah Objek Lelang Baru
     Click Element                    ${tab_objek_lelang}
     Sleep                            1s
 
+    ${existing_lots}=                Get Element Count               xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
+
     Wait Until Element Is Visible    ${tambah_objek_lelang}          timeout=10s
     Click Element                    ${tambah_objek_lelang}
     Sleep                            1.5s
 
-    Wait Until Page Contains Element    ${pilih_objek_lelang}        timeout=10s
-    ${cb_el}=                        Get Web Element                 ${pilih_objek_lelang}
-    Execute Javascript               arguments[0].click();           ARGUMENTS    ${cb_el}
-    Sleep                            0.5s
+    FOR    ${index}    IN RANGE    1    3
+        ${checkbox_row}=             Set Variable                    xpath=(//div[@role='dialog'])[last()]//tbody/tr[${index}]//input[@type='checkbox']
+        
+        Wait Until Element Is Visible    ${checkbox_row}             timeout=10s
+        Scroll Element Into View         ${checkbox_row}
+        Click Element                    ${checkbox_row}
+        Sleep                            0.3s
+    END
 
-    Wait Until Element Is Visible    ${tambahkan_objek_lelang}      timeout=10s
+    Scroll Element Into View         ${tambahkan_objek_lelang}
+    Wait Until Element Is Visible    ${tambahkan_objek_lelang}       timeout=10s
     Click Element                    ${tambahkan_objek_lelang}
     Sleep                            2s
 
-    ${lot_inputs}=                   Get Web Elements                xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
-    ${max_lot}=                      Set Variable                    0
+    ${total_after}=                  Get Element Count               xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
 
-    FOR    ${el}    IN    @{lot_inputs}
-        ${val}=                      Get Value                       ${el}
-        IF    '${val}' != '' and ${val} > ${max_lot}
-            ${max_lot}=              Set Variable                    ${val}
-        END
+    ${start_index}=                  Evaluate                        ${existing_lots} + 1
+
+    FOR    ${i}    IN RANGE    ${start_index}    ${total_after + 1}
+        ${lot_xpath}=                Set Variable                    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[${i}]
+        
+        Wait Until Element Is Visible    xpath=${lot_xpath}          timeout=10s
+        Scroll Element Into View         xpath=${lot_xpath}
+        Sleep                            0.2s
+
+        # Pengisian No Lot kelanjutan (Misal data awal 2 -> diisi 3, 4, dst)
+        Press Keys                       xpath=${lot_xpath}          CTRL+a+BACKSPACE
+        Press Keys                       xpath=${lot_xpath}          ${i}
+        Press Keys                       xpath=${lot_xpath}          ENTER
+        Sleep                            0.3s
     END
-
-    ${next_lot}=                     Evaluate                        ${max_lot} + 1
-
-    ${lot_last_xpath}=               Set Variable                    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[last()]
-    Wait Until Element Is Visible    xpath=${lot_last_xpath}         timeout=10s
-    Scroll Element Into View         xpath=${lot_last_xpath}
-
-    Click Element                    xpath=${lot_last_xpath}
-    Press Keys                       xpath=${lot_last_xpath}         CTRL+a+BACKSPACE
-    Sleep                            0.2s
-    Press Keys                       xpath=${lot_last_xpath}         ${next_lot}
-    Sleep                            0.3s
-    Press Keys                       xpath=${lot_last_xpath}         TAB
-    Sleep                            0.5s
-
-    Execute JavaScript               document.activeElement.blur();
-    Sleep                            1s
 
 Tambah Group Bidder Baru
     Wait Until Element Is Visible       ${tab_bidder}       timeout=10s
@@ -887,3 +893,79 @@ Batal Edit Lelang Dan Verifikasi Data Awal
     Wait Until Element Is Visible    ${edit_nama_judulLelang}       timeout=10s
     ${nama_sekarang}=                Get Value                       ${edit_nama_judulLelang}
     Should Be Equal                  ${nama_awal}                    ${nama_sekarang}
+
+Buat Bundle Unit Objek Lelang
+    [Documentation]    Keyword lengkap untuk membuat bundle dari pilihan unit objek lelang (TC-ED-BDL-001)
+
+    Wait Until Page Contains Element    ${checkbox_select_all_objek}       timeout=10s
+    Scroll Element Into View            ${checkbox_select_all_objek}
+    
+    ${chk_el}=                          Get Web Element                    ${checkbox_select_all_objek}
+    Execute Javascript                  arguments[0].click();              ARGUMENTS    ${chk_el}
+    Sleep                               0.5s
+
+    Wait Until Element Is Visible       ${btn_buat_bundle}                  timeout=10s
+    Wait Until Element Is Enabled       ${btn_buat_bundle}                  timeout=10s
+    Click Element                       ${btn_buat_bundle}
+    Sleep                               1s
+
+    Wait Until Element Is Visible       ${btn_buat_dan_kunci_unit}         timeout=10s
+    Wait Until Element Is Enabled       ${btn_buat_dan_kunci_unit}         timeout=10s
+    Click Element                       ${btn_buat_dan_kunci_unit}
+
+    Wait Until Element Is Visible       ${toast_sukses_buat_bundle}        timeout=5s
+    Sleep                               0.5s
+
+Buat Bundle Manual Dari Tab Bundle
+    [Documentation]    Keyword untuk membuat bundle manual dari Tab Bundle (TC-ED-BDL-002)
+
+    # 1. Klik Tab Bundle
+    Wait Until Page Contains Element    ${tab_bundle}                      timeout=10s
+    Click Element                       ${tab_bundle}
+    Sleep                               1s
+
+    # 2. Klik Tombol '+ Tambah Bundle'
+    Wait Until Element Is Visible       ${btn_tambah_bundle}               timeout=10s
+    Click Element                       ${btn_tambah_bundle}
+    Sleep                               1s
+
+    # -------------------------------------------------------------
+    # 3. PILIH UNIT PERTAMA
+    # -------------------------------------------------------------
+    Wait Until Element Is Visible       ${dropdown_pilih_unit_bundle}      timeout=10s
+    Click Element                       ${dropdown_pilih_unit_bundle}
+    Sleep                               0.5s
+
+    # Menunggu listbox/popover dropdown terbuka
+    Wait Until Page Contains Element    xpath=//div[@role='option' or @data-radix-collection-item][ancestor::div[@data-radix-popper-content-wrapper or @role='listbox']]    timeout=5s
+    
+    # Pilih opsi ke-1
+    ${opt1}=                            Get Web Element                    xpath=(//div[@role='option' or @data-radix-collection-item][ancestor::div[@data-radix-popper-content-wrapper or @role='listbox']])[1]
+    Execute Javascript                  arguments[0].click();              ARGUMENTS    ${opt1}
+    Sleep                               0.5s
+
+    # -------------------------------------------------------------
+    # 4. PILIH UNIT KEDUA
+    # -------------------------------------------------------------
+    # Buka lagi dropdown untuk unit kedua jika tertutup
+    Wait Until Element Is Visible       ${dropdown_pilih_unit_bundle}      timeout=10s
+    Click Element                       ${dropdown_pilih_unit_bundle}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    xpath=//div[@role='option' or @data-radix-collection-item][ancestor::div[@data-radix-popper-content-wrapper or @role='listbox']]    timeout=5s
+    
+    # Pilih opsi ke-1 lagi dari sisa list
+    ${opt2}=                            Get Web Element                    xpath=(//div[@role='option' or @data-radix-collection-item][ancestor::div[@data-radix-popper-content-wrapper or @role='listbox']])[1]
+    Execute Javascript                  arguments[0].click();              ARGUMENTS    ${opt2}
+    Sleep                               0.5s
+
+    # -------------------------------------------------------------
+    # 5. KLIK BUAT & KUNCI UNIT
+    # -------------------------------------------------------------
+    Wait Until Element Is Visible       ${btn_buat_dan_kunci_unit}         timeout=10s
+    Wait Until Element Is Enabled       ${btn_buat_dan_kunci_unit}         timeout=10s
+    Click Element                       ${btn_buat_dan_kunci_unit}
+
+    # 6. Validasi Toast Notification
+    Wait Until Element Is Visible       ${toast_sukses_buat_bundle}        timeout=5s
+    Sleep                               0.5s

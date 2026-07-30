@@ -156,4 +156,39 @@ Execute Login Scenario
 #    Wait Until Element Is Visible    ${btn_batal_edit}              timeout=10s
 #    Click Element                    ${btn_batal_edit}
 #    Sleep    2s
+
+# Verify Create Bundle Unit Successful Tab Objek
+#    [Documentation]     TC-ED-BDL-001 Verify Create Bundle Unit Successful Tab Objek
+#    Sleep    5s
+#    Go To    ${BASE_URL}lelang/list-lelang    
+#
+#    Edit Lelang
+#    Sleep    2s
+#
+#    Tambah Objek Lelang Baru
+#    Sleep    1s
+#
+#    Buat Bundle Unit Objek Lelang
+#   Sleep    1s
+#
+#    Click Simpan Lelang Tab Ringkasan
+#    Click Pop Up Konfirmasi notification Update Objek Lelang
+#    Sleep    3s
 *** Test Cases ***
+Verify Create Bundle Unit Successful Tab Objek
+    [Documentation]     TC-ED-BDL-001 Verify Create Bundle Unit Successful Tab Objek
+    Sleep    5s
+    Go To    ${BASE_URL}lelang/list-lelang    
+
+    Edit Lelang
+    Sleep    2s
+
+    Tambah Objek Lelang Baru
+    Sleep    1s
+
+    Buat Bundle Manual Dari Tab Bundle
+   Sleep    1s
+
+    Click Simpan Lelang Tab Ringkasan
+    Click Pop Up Konfirmasi notification Bundle
+    Sleep    3s

@@ -127,7 +127,7 @@ pilih_waktu_wanpes="xpath://input[@type='date' and @min='2025-12-14' and @max='2
 input_lelang_id="//input[@name='auctionNumber']"
 
 #value pencarian
-id_lelang="00004214"
+id_lelang="00004217"
 
 #Free Admin Fee
 checkbox_free_admin=" xpath=//tr[contains(., 'FREE ADMIN FEE')]//input[@type='checkbox']"
@@ -178,3 +178,19 @@ toast_sukses_buat_lelang = "xpath=//li[@data-sonner-toast and contains(., 'Sukse
 toast_sukses_update_objek_lelang = "xpath=//li[@data-sonner-toast and contains(., 'Sukses mengupdate objek lelang!')]"
 toast_sukses_update_bidder = "xpath=//li[@data-sonner-toast and contains(., 'Sukses mengupdate bidder!')]"
 toast_sukses_perbarui_data_lelang="xpath=//li[@data-sonner-toast and contains(., 'Berhasil memperbarui data lelang!')] "
+
+#Tambah Bundle
+checkbox_select_all_objek = "xpath=//th//input[@type='checkbox']"
+btn_buat_bundle = "xpath=//button[contains(., 'Buat Bundle')]"
+btn_buat_dan_kunci_unit = "xpath=//button[contains(., 'Buat & Kunci Unit')]"
+toast_sukses_buat_bundle = "xpath=//li[@data-sonner-toast and contains(., 'berhasil dibuat')]"
+toast_sukses_buat_bundle_tipe = "xpath=//li[@data-sonner-toast and @data-type='success' and contains(., 'bundle')]"
+toast_sukses_buat_bundle_manual = "xpath=//li[@data-sonner-toast and contains(., 'Bundle berhasil dibuat!')]"
+
+#Page Bundle
+tab_bundle = "xpath=//button[@role='tab' and contains(., 'Bundle')]"
+btn_tambah_bundle = "xpath=//button[contains(., '+ Tambah Bundle')]"
+input_nama_bundle = "id=bundle-name-input"
+dropdown_pilih_unit_bundle = "xpath=//button[@role='combobox' and .//span[contains(text(), 'Cari dan pilih unit')]]"
+opsi_unit_dropdown_pertama = "xpath=(//div[@role='option' or @data-radix-collection-item][ancestor::div[@data-radix-popper-content-wrapper or @role='listbox']])[1]"
+opsi_unit_kedua   = "xpath=(//div[@role='option' or @data-radix-collection-item])[2]"
