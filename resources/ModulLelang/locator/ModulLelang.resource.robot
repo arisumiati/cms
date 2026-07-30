@@ -84,85 +84,79 @@ Click Pop Up Konfirmasi notification Bundle
     Wait Until Element Is Visible    ${toast_sukses_buat_bundle_manual}    timeout=5s
 
 Input List Lelang Ringkasan
+    ${today}=               Get Current Date    result_format=%m%d%Y
+    ${tgl_selesai_auto}=    Get Current Date    result_format=%m%d%Y    increment=+7 days
+    ${tgl_wanpes_auto}=     Get Current Date    result_format=%m%d%Y    increment=+14 days
 
-    ${tommorow}=    Get Current Date    result_format=%Y-%m-%d    increment=+1 day
+    Wait Until Element Is Visible    ${input_nama_lelang}               timeout=10s
+    Input Text                       ${input_nama_lelang}               ${nama_lelang}
+    Sleep                            1s
+
+    Click Element                    ${input_objek_lelang}
+    Click Element                    ${switch_objek_lelang}
+
+    Wait Until Element Is Visible    ${input_jenis_lelang}              timeout=10s
+    Click Element                    ${input_jenis_lelang}
+
+    Wait Until Element Is Visible    ${switch_jenis_lelang}             timeout=10s
+    Click Element                    ${switch_jenis_lelang}
+
+    Wait Until Element Is Visible    ${input_cabang}                    timeout=10s
+    Click Element                    ${input_cabang}
+
+    Wait Until Element Is Visible    ${cabang}                          timeout=10s
+    Click Element                    ${cabang}
+
+    Wait Until Element Is Visible    ${switch_show_auction}             timeout=10s
+    Scroll Element Into View         ${switch_show_auction}
+    Click Element                    ${switch_show_auction}
+    Sleep                            1s
     
-    Wait Until Element Is Visible  ${input_nama_lelang}
-    Input Text  ${input_nama_lelang}  ${nama_lelang}
-    Sleep    3s
+    Wait Until Element Is Visible    ${input_tanggal_mulai}             timeout=10s
+    Scroll Element Into View         ${input_tanggal_mulai}
+    Sleep                            0.5s
 
-    Click Element  ${input_objek_lelang}
-    Click Element    ${switch_objek_lelang}
+    Press Keys                       ${input_tanggal_mulai}             CTRL+a+BACKSPACE
+    Press Keys                       ${input_tanggal_mulai}             ${today}
+    Press Keys                       ${input_tanggal_mulai}             TAB
+    Sleep                            0.5s
 
-    Click Element   ${input_jenis_lelang}
-    Wait Until Element Is Visible   ${input_jenis_lelang}     timeout=10s
+    Input Text                       ${input_waktu_mulai}               ${waktu_mulai_lelang}
+    Press Keys                       ${input_waktu_mulai}               TAB
+    Sleep                            0.5s
 
-    Wait Until Element Is Visible   ${switch_jenis_lelang}    timeout=10s
-    Click Element   ${switch_jenis_lelang}
+    Wait Until Element Is Visible    ${input_tanggal_selesai}           timeout=10s
+    Scroll Element Into View         ${input_tanggal_selesai}
+    Sleep                            0.5s
 
-    Wait Until Element Is Visible   ${input_cabang}     timeout=10s
-    Click Element  ${input_cabang}
-
-    Wait Until Element Is Visible   ${cabang}   timeout=10s
-    Click Element   ${cabang}
-
-    Wait Until Element Is Visible   ${switch_show_auction}      timeout=10s
-    Scroll Element Into View        ${switch_show_auction}
-    Click Element                   ${switch_show_auction}
-    Sleep    1s
-    
-    ${besok}=    Get Current Date    result_format=%Y-%m-%d    increment=+1 day
-    
-    Scroll Element Into View     ${input_tanggal_mulai}
-    Sleep             1s
-    Wait Until Element Is Visible   ${input_tanggal_mulai}      timeout=10s
-    Scroll Element Into View        ${input_tanggal_mulai}
-    Sleep   1s
-
-    Press Keys      ${input_tanggal_mulai}  CTRL+a+BACKSPACE
-    Press Keys      ${input_tanggal_mulai}  07292026
-    Press Keys      ${input_tanggal_mulai}  TAB
-    Sleep   1s
-
-
-    Input Text  ${input_waktu_mulai}  ${waktu_mulai_lelang}
-    Press Keys  ${input_waktu_mulai}    TAB
-    Sleep   1s
-
-    Wait Until Element Is Visible   ${input_tanggal_selesai}    timeout=10s
-    Scroll Element Into View    ${input_tanggal_selesai}
-    Sleep             1s
-
-    Press Keys        ${input_tanggal_selesai}    CTRL+a+BACKSPACE
-    Press Keys        ${input_tanggal_selesai}    07302026
-    Press Keys        ${input_tanggal_selesai}    TAB
-    Sleep   1s
+    Press Keys                       ${input_tanggal_selesai}           CTRL+a+BACKSPACE
+    Press Keys                       ${input_tanggal_selesai}           ${tgl_selesai_auto}
+    Press Keys                       ${input_tanggal_selesai}           TAB
+    Sleep                            0.5s
    
-    Input Text    ${input_waktu_selesai}    ${waktu_selesai_lelang}
-    Press Keys      ${input_waktu_selesai}  TAB
-    Sleep   1s
+    Input Text                       ${input_waktu_selesai}             ${waktu_selesai_lelang}
+    Press Keys                       ${input_waktu_selesai}             TAB
+    Sleep                            0.5s
 
-    Scroll Element Into View    ${input_kelipatan}
-    Sleep   1s
-    Press Keys  ${input_kelipatan}  ${kelipatan_harga_bid}
-    Press Keys  ${input_kelipatan}  TAB
-    Sleep   1s
-    
+    Scroll Element Into View         ${input_kelipatan}
+    Sleep                            0.5s
+    Press Keys                       ${input_kelipatan}                 ${kelipatan_harga_bid}
+    Press Keys                       ${input_kelipatan}                 TAB
+    Sleep                            0.5s
 
-
-    Wait Until Element Is Visible    ${input_tanggal_wanpes}    timeout=10s
+    Wait Until Element Is Visible    ${input_tanggal_wanpes}            timeout=10s
     Scroll Element Into View         ${input_tanggal_wanpes}
-    Press Keys                       ${input_tanggal_wanpes}    CTRL+a+BACKSPACE
-    Press Keys                       ${input_tanggal_wanpes}    07292026
-    Press Keys                       ${input_tanggal_wanpes}    TAB
-    Sleep                            1s
+    Press Keys                       ${input_tanggal_wanpes}            CTRL+a+BACKSPACE
+    Press Keys                       ${input_tanggal_wanpes}            ${tgl_wanpes_auto}
+    Press Keys                       ${input_tanggal_wanpes}            TAB
+    Sleep                            0.5s
 
-    Wait Until Element Is Visible    ${input_waktu_wanpes}      timeout=10s
+    Wait Until Element Is Visible    ${input_waktu_wanpes}              timeout=10s
     Scroll Element Into View         ${input_waktu_wanpes}
-    Press Keys                       ${input_waktu_wanpes}      CTRL+a+BACKSPACE
-    Press Keys                       ${input_waktu_wanpes}      ${waktu_wanpres}
-    Press Keys                       ${input_waktu_wanpes}      TAB
-    Sleep                            1s
+    Press Keys                       ${input_waktu_wanpes}              CTRL+a+BACKSPACE
+    Press Keys                       ${input_waktu_wanpes}              ${waktu_wanpres}
+    Press Keys                       ${input_waktu_wanpes}              TAB
+    Sleep                            0.5s
 
 Input Objek Lelang
     Wait Until Element Is Visible    ${tab_objek_lelang}         timeout=10s
