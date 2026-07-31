@@ -36,7 +36,7 @@ symbol_persen="xpath://*[normalize-space(text())='%']"
 checkbox_customer_regular="xpath=//label[contains(text(),'Lelang terbuka untuk customer Regular')]/preceding-sibling::input"
 
 #input objek lelang Free Admin Fee
-checkbox_free_admin="xpath=(//table//tbody/tr)[last()]/td[position()=last()-2]//input[@type='checkbox']"
+checkbox_free_admin = "xpath=(//table//tbody/tr)[last()]/td[10]//*[self::input or self::button or self::label or self::div]"
 admin_fee_container="xpath=//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/ancestor::table//tbody/tr[1]/td[position()=count(//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/preceding-sibling::th)+1]"
 
 #Checkbox Rekomendasi
@@ -127,7 +127,7 @@ pilih_waktu_wanpes="xpath://input[@type='date' and @min='2025-12-14' and @max='2
 input_lelang_id="//input[@name='auctionNumber']"
 
 #value pencarian
-id_lelang="00004217"
+id_lelang="00004231"
 
 #Free Admin Fee
 checkbox_free_admin=" xpath=//tr[contains(., 'FREE ADMIN FEE')]//input[@type='checkbox']"
@@ -147,9 +147,9 @@ edit_waktu_Updateselesai = (
 )
 
 edit_nama_lelang = "Testing Update"
-edit_tgl_mulai = "07292026"
+edit_tgl_mulai = "08022026"
 edit_waktu_mulai = "1700PM"
-edit_tgl_selesai = "07302026"
+edit_tgl_selesai = "08042026"
 edit_waktu_selesai = "1100PM"
 edit_fee = "140000"
 

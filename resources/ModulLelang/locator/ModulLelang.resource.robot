@@ -158,44 +158,33 @@ Input List Lelang Ringkasan
     Press Keys                       ${input_waktu_wanpes}              TAB
     Sleep                            0.5s
 
-Input Objek Lelang
-    Wait Until Element Is Visible    ${tab_objek_lelang}         timeout=10s
-    Click Element                    ${tab_objek_lelang}
-    Sleep                            1s
+Input Objek Lelang Free Admin
+    Click Element        ${tab_objek_lelang}
+    Click Element        ${tambah_objek_lelang}
+    Sleep                5s
+    Wait Until Element Is Visible    ${pilih_objek_lelang}
+    Click Element        ${pilih_objek_lelang}
 
-    Wait Until Element Is Visible    ${tambah_objek_lelang}      timeout=10s
-    Click Element                    ${tambah_objek_lelang}
-    Sleep                            2s
-
-    FOR    ${index}    IN RANGE    1    3
-        ${checkbox_row}=    Set Variable    xpath=(//div[@role='dialog'])[last()]//tbody/tr[${index}]//input[@type='checkbox']
-        
-        Wait Until Element Is Visible    ${checkbox_row}         timeout=10s
-        Scroll Element Into View         ${checkbox_row}
-        Click Element                    ${checkbox_row}
-        Sleep                            0.3s
-    END
-
-    Scroll Element Into View         ${tambahkan_objek_lelang}
-    Wait Until Element Is Visible    ${tambahkan_objek_lelang}   timeout=10s
-    Click Element                    ${tambahkan_objek_lelang}
-    Sleep                            2s
-
+    Scroll Element Into View    ${tambahkan_objek_lelang} 
+    Click Element        ${tambahkan_objek_lelang}    
+    
     ${total}=    Get Element Count    xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
 
     FOR    ${i}    IN RANGE    1    ${total + 1}
         ${lot_xpath}=    Set Variable    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[${i}]
-        
-        Wait Until Element Is Visible    xpath=${lot_xpath}      timeout=10s
+        Wait Until Element Is Visible    xpath=${lot_xpath}    10s
         Scroll Element Into View         xpath=${lot_xpath}
         Sleep                            0.2s
-
-        # Pengisian No Lot
-        Press Keys    xpath=${lot_xpath}    CTRL+a+BACKSPACE
-        Press Keys    xpath=${lot_xpath}    ${i}
-        Press Keys    xpath=${lot_xpath}    ENTER
-        Sleep         0.3s
+        
+        Press Keys                       xpath=${lot_xpath}    CONTROL+a+BACKSPACE
+        Press Keys                       xpath=${lot_xpath}    ${i}
+        Press Keys                       xpath=${lot_xpath}    ENTER
+        Sleep                            0.3s
     END
+
+    ${el_cb}=            Get Web Element        ${checkbox_free_admin}
+    Execute Javascript   arguments[0].click();  ARGUMENTS    ${el_cb}
+    Sleep                1s
 
 Input Admin Fee Per Objek Lelang
     Sleep    3s
@@ -378,7 +367,7 @@ Verify Free Admin Fee Overrides Admin Fee To Zero
     ${admin_fee_text}=                  Get Text                  ${admin_fee_container}
     Should Contain                      ${admin_fee_text}         0
 
-Input Objek Lelang Free Admin
+Input Objek Lelang
     Click Element    ${tab_objek_lelang}
     Click Element    ${tambah_objek_lelang}
     Sleep    5s
@@ -589,77 +578,88 @@ Edit Data Tab Ringkasan
     Sleep                            1s
 
 Edit Data Tab Objek Lelang
-    Wait Until Element Is Visible    ${tab_objek_lelang}             timeout=10s
-    Scroll Element Into View         ${tab_objek_lelang}
-    Click Element                    ${tab_objek_lelang}
-    Sleep                            1s
+    # 1. PINDAH KE TAB OBJEK LELANG
+    Wait Until Element Is Visible        ${tab_objek_lelang}                 timeout=10s
+    Scroll Element Into View             ${tab_objek_lelang}
+    Click Element                        ${tab_objek_lelang}
+    Sleep                                1s
 
-    Wait Until Page Contains Element    xpath=//table//tbody/tr      timeout=10s
-    Wait Until Page Contains Element    ${btn_delete_objek_row1}     timeout=10s
-    Scroll Element Into View            ${btn_delete_objek_row1}
-    ${delete_el}=                       Get Web Element              ${btn_delete_objek_row1}
-    Execute Javascript                  arguments[0].click();        ARGUMENTS    ${delete_el}
-    Sleep                               1s
+    # 2. PROSES DELETE BARIS PERTAMA
+    Wait Until Page Contains Element    xpath=//table//tbody/tr          timeout=10s
+    ${initial_rows}=                    Get Element Count               xpath=//table//tbody/tr
 
-    Wait Until Element Is Visible       ${btn_konfirmasi_hapus_objek}    timeout=5s
-    Click Element                       ${btn_konfirmasi_hapus_objek}
-    Sleep                               1s
+    IF    ${initial_rows} > 0
+        Wait Until Page Contains Element    ${btn_delete_objek_row1}     timeout=10s
+        Scroll Element Into View            ${btn_delete_objek_row1}
+        ${delete_el}=                       Get Web Element              ${btn_delete_objek_row1}
+        Execute Javascript                  arguments[0].click();        ARGUMENTS    ${delete_el}
+        Sleep                               1s
 
-    Wait Until Element Is Visible    ${tambah_objek_lelang}          timeout=10s
-    Click Element                    ${tambah_objek_lelang}
-    Sleep                            2s
-
-    ${checkbox_row1}=    Set Variable    xpath=(//div[@role='dialog'])[last()]//tbody/tr[1]//input[@type='checkbox']
-    Wait Until Element Is Visible    ${checkbox_row1}                timeout=10s
-    Click Element                    ${checkbox_row1}
-    Sleep                            0.5s
-
-    Scroll Element Into View         ${tambahkan_objek_lelang}
-    Click Element                    ${tambahkan_objek_lelang}
-    Sleep                            2s
-
-    ${lot_inputs}=                   Get Web Elements                xpath=//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input
-    ${max_lot}=                      Set Variable                    0
-
-    FOR    ${el}    IN    @{lot_inputs}
-        ${val}=                      Get Value                       ${el}
-        IF    '${val}' != '' and ${val} > ${max_lot}
-            ${max_lot}=              Set Variable                    ${val}
-        END
+        # Konfirmasi Hapus Objek
+        Wait Until Element Is Visible       ${btn_konfirmasi_hapus_objek}    timeout=5s
+        Click Element                       ${btn_konfirmasi_hapus_objek}
+        Wait Until Element Is Not Visible   ${btn_konfirmasi_hapus_objek}    timeout=10s
+        Sleep                               1.5s
     END
 
-    ${next_lot}=                     Evaluate                        ${max_lot} + 1
+    # 3. ALUR TAMBAH OBJEK LELANG
+    Wait Until Element Is Visible        ${tambah_objek_lelang}          timeout=10s
+    Click Element                        ${tambah_objek_lelang}
+    Sleep                                2s
+    Wait Until Element Is Visible        ${pilih_objek_lelang}
+    Click Element                        ${pilih_objek_lelang}
 
-    ${lot_last_xpath}=               Set Variable                    (//th[normalize-space()='NO LOT']/ancestor::table//tbody/tr/td[position()=count(//th[normalize-space()='NO LOT']/preceding-sibling::th)+1]//input)[last()]
-    Wait Until Element Is Visible    xpath=${lot_last_xpath}         timeout=10s
-    Scroll Element Into View         xpath=${lot_last_xpath}
+    Scroll Element Into View             ${tambahkan_objek_lelang} 
+    Click Element                        ${tambahkan_objek_lelang}    
+    Sleep                                2s
 
-    Click Element                    xpath=${lot_last_xpath}
-    Press Keys                       xpath=${lot_last_xpath}         CTRL+a+BACKSPACE
+    # 4. LOGIKA DINAMIS: CEK JUMLAH BARIS REAL & SET NO LOT
+    ${lot_inputs_raw}=      Set Variable    //table//tbody/tr//input[@type='number']
+    Wait Until Page Contains Element    xpath=${lot_inputs_raw}          timeout=10s
+    ${lot_inputs}=          Get Web Elements                             xpath=${lot_inputs_raw}
+    
+    # Hitung TOTAL BARIS AKTIF di tabel saat ini
+    ${total_rows}=          Get Length                                   ${lot_inputs}
+
+    # Nilai No Lot baru disesuaikan dengan total baris yang ada di tabel
+    ${next_lot}=            Set Variable                                 ${total_rows}
+
+    # Targetkan input No Lot di BARIS PALING BELAKANG / TERAKHIR
+    ${target_lot_xpath}=    Set Variable    (${lot_inputs_raw})[${total_rows}]
+    Wait Until Element Is Visible    xpath=${target_lot_xpath}           timeout=10s
+    Scroll Element Into View         xpath=${target_lot_xpath}
     Sleep                            0.2s
 
-    Press Keys                       xpath=${lot_last_xpath}         ${next_lot}
+    # Input No Lot secara pasti
+    Press Keys                       xpath=${target_lot_xpath}           CONTROL+a+BACKSPACE
+    Press Keys                       xpath=${target_lot_xpath}           ${next_lot}
+    Press Keys                       xpath=${target_lot_xpath}           ENTER
     Sleep                            0.3s
 
-    Press Keys                       xpath=${lot_last_xpath}         TAB
+    # Trigger Dispatch State untuk No Lot
+    ${el_target}=                    Get Web Element                     xpath=${target_lot_xpath}
+    Execute Javascript      
+    ...    arguments[0].dispatchEvent(new Event('input', { bubbles: true }));
+    ...    arguments[0].dispatchEvent(new Event('change', { bubbles: true }));
+    ...    arguments[0].dispatchEvent(new Event('blur', { bubbles: true }));
+    ...    ARGUMENTS                     ${el_target}
     Sleep                            0.5s
 
-    Execute Javascript               var el = document.querySelector("table").parentElement; el.scrollLeft = el.scrollWidth;
+    # 5. SET CHECKBOX FREE ADMIN DI BARIS TERAKHIR
+    ${cb_td_xpath}=                  Set Variable                        xpath=//table//tbody/tr[${total_rows}]/td[position()=count(//th[contains(.,'FREE ADMIN FEE')]/preceding-sibling::th)+1]
+    Wait Until Page Contains Element    ${cb_td_xpath}                  timeout=10s
+    ${cb_td_el}=                     Get Web Element                     ${cb_td_xpath}
+
+    Execute Javascript               arguments[0].scrollIntoView({behavior: 'instant', block: 'nearest', inline: 'end'});    ARGUMENTS    ${cb_td_el}
     Sleep                            0.5s
 
-    ${cb_free_admin_last}=           Set Variable                    xpath=(//table//tbody/tr)[last()]/td[position()=last()-2]//input[@type='checkbox']
-    Wait Until Page Contains Element    ${cb_free_admin_last}        timeout=10s
-    ${el_cb}=                        Get Web Element                 ${cb_free_admin_last}
-
-    Execute Javascript               arguments[0].scrollIntoView({inline: 'center', block: 'center'});    ARGUMENTS    ${el_cb}
-    Sleep                            0.5s
-
-    Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_cb}
+    ${cb_input_el}=                  Get Web Element                     ${cb_td_xpath}//*[self::input or self::label or contains(@class,'checkbox')]
+    Execute Javascript               arguments[0].click();               ARGUMENTS    ${cb_input_el}
     Sleep                            1s
 
     Execute JavaScript               document.activeElement.blur();
     Sleep                            1s
-
+    
 Edit Data Tab Bidder
     Wait Until Element Is Visible    ${tab_bidder}               timeout=10s
     Scroll Element Into View         ${tab_bidder}
