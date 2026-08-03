@@ -90,7 +90,7 @@ Input Tambah Objek Lelang Unit
     
     ${el_dropdown_mou}=              Get Web Element                ${dropdown_mou}
     Execute Javascript               arguments[0].click();          ARGUMENTS    ${el_dropdown_mou}
-    Sleep    1s    # Jeda agar menu popover MOU sempat muncul di layar
+    Sleep    1s 
 
     ${target_mou}=                   Evaluate                       '''${option_mou_template}'''.format(mou_id='${mou_id}')
 
@@ -106,7 +106,7 @@ Input Tambah Objek Lelang Unit
 
     ${el_dropdown_addendum}=         Get Web Element                  ${dropdown_addendum}
     Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_dropdown_addendum}
-    Sleep    1s    # Jeda agar popover Addendum sempat ter-render
+    Sleep    1s  
 
     ${target_addendum}=              Evaluate                         '''${option_addendum_template}'''.format(addendum_id='${addendum_id}')
 
@@ -306,7 +306,7 @@ Input Tambah Objek Lelang Unit Tanpa Display
     
     ${el_dropdown_mou}=              Get Web Element                ${dropdown_mou}
     Execute Javascript               arguments[0].click();          ARGUMENTS    ${el_dropdown_mou}
-    Sleep    1s    # Jeda agar menu popover MOU sempat muncul di layar
+    Sleep    1s  
 
     ${target_mou}=                   Evaluate                       '''${option_mou_template}'''.format(mou_id='${mou_id}')
 
@@ -322,7 +322,7 @@ Input Tambah Objek Lelang Unit Tanpa Display
 
     ${el_dropdown_addendum}=         Get Web Element                  ${dropdown_addendum}
     Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_dropdown_addendum}
-    Sleep    1s    # Jeda agar popover Addendum sempat ter-render
+    Sleep    1s    
 
     ${target_addendum}=              Evaluate                         '''${option_addendum_template}'''.format(addendum_id='${addendum_id}')
 
@@ -348,7 +348,7 @@ Input Tambah Objek Lelang Unit Tanpa Display
 
     ${el_dropdown_merek}=            Get Web Element                 ${dropdown_merek}
     Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_dropdown_merek}
-    Sleep    1s    # Jeda agar popover Merek ter-render sempurna
+    Sleep    1s   
 
     ${target_merek}=                 Evaluate                        '''${option_merek_template}'''.format(merek_name='${merek_name}')
 
@@ -364,7 +364,7 @@ Input Tambah Objek Lelang Unit Tanpa Display
 
     ${el_dropdown_model}=            Get Web Element                 ${dropdown_model}
     Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_dropdown_model}
-    Sleep    1s    # Jeda agar popover Model ter-render
+    Sleep    1s  
 
     ${target_model}=                 Evaluate                        '''${option_model_template}'''.format(model_name='${model_name}')
 
@@ -392,7 +392,7 @@ Input Tambah Objek Lelang Unit Tanpa Display
 
     ${el_dropdown_warna}=            Get Web Element                 ${dropdown_warna}
     Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_dropdown_warna}
-    Sleep    1s    # Jeda agar popover Warna ter-render
+    Sleep    1s 
 
     ${target_warna}=                 Evaluate                        '''${option_warna_template}'''.format(warna_name='${warna_name}')
 
