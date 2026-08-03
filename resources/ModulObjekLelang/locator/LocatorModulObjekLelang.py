@@ -9,6 +9,8 @@ dropdown_objek_lelang="xpath=//input[@value='Pilih Objek Lelang']/parent::div | 
 option_electronic="xpath=//div[@role='dialog']//button[.//span[text()='Electronic']]"
 btn_tampilkan="xpath=//button[@data-slot='popover-close' and .//span[text()='Tampilkan']]"
 
+
+
 #tambah Unit objek lelang
 btn_tambah_objek_lelang="xpath=//button[@data-slot='button' and contains(., 'Tambah')]"
 dropdown_pilih_cabang="xpath=//input[@value='Pilih Cabang']/parent::div | //div[contains(@aria-controls, 'radix') and .//input[@value='Pilih Cabang']]"

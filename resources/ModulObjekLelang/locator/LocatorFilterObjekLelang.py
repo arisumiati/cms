@@ -1,0 +1,20 @@
+#filter objek lelang
+dropdown_filter_merek = "xpath=//input[@value='Pilih Merek' or contains(@placeholder, 'Merek')]/parent::div | //label[contains(text(),'Merek')]/following-sibling::div"
+option_filter_template = "xpath=//div[@role='dialog']//button[.//span[text()='{option_name}']]"
+dropdown_filter_cabang = "xpath=//input[@value='Pilih Cabang' or contains(@placeholder, 'Cabang')]/parent::div | //label[contains(text(),'Cabang')]/following-sibling::div"
+input_filter_no_stok = "xpath=//input[@placeholder='Ketik No Stok']"
+input_filter_seller_name = "xpath=//input[@placeholder='Ketik Seller Name']"
+input_filter_created_date = "xpath=//input[@placeholder='Pilih Created Date']"
+dropdown_status_unit = "xpath=//span[contains(text(), 'Pilih Status Unit')]/ancestor::div[@role='group'] | //label[contains(text(),'Status Unit')]/following-sibling::div"
+option_status_unit_template = "xpath=//div[@role='role' or @role='dialog' or contains(@class, 'z-50')]//div[@role='option'][.//span[text()='{status_name}']]"
+btn_hapus = "xpath=//button[@data-slot='popover-close' and .//span[text()='Hapus']]"
+
+#input Filter Objek Lelang
+No_Stok_Filter="00004927"
+input_merek="Dell"
+input_cabang="Balikpapan"
+input_seller_name="aa"
+input_seller_Empty="<p>Hello</p>"
+input_seller_Sql="<script>alert(1)</script>"
+input_created_at="08/03/2026"
+input_status_unit="Available"
