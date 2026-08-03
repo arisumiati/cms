@@ -30,7 +30,7 @@ dropdown_model = "xpath=//input[@value='Pilih Model']/parent::div | //div[contai
 option_model_template = "xpath=//button[.//span[contains(text(), '{model_name}')]]"
 input_tahun_unit = "xpath=//input[@name='year' or @placeholder='Ketik Tahun Unit']"
 input_ram = "xpath=//input[@name='memoryRam' or @placeholder='Ketik RAM']"
-dropdown_warna = "xpath=//input[@value='Pilih Warna']/parent::div | //div[contains(@class, 'cursor-pointer')][.//input[@value='Pilih Warna']]"
+dropdown_warna = "xpath=//label[contains(text(),'Warna')]/following-sibling::div | //input[@placeholder='Pilih Warna' or @value='BIRU' or @value='Pilih Warna']/parent::div"
 option_warna_template = "xpath=//div[@role='dialog']//button[.//span[contains(text(), '{warna_name}')]]"
 random_str = ''.join(random.choices(string.ascii_uppercase + string.digits, k=4))
 serial_number_val = f"SN-{time.strftime('%Y%m%d')}-{random_str}"
@@ -40,6 +40,19 @@ dropdown_grade = "xpath=//input[@value='Pilih Grade']/ancestor::div[@type='butto
 option_grade = "xpath=//div[@role='dialog']//button[.//span[text()='{value}']]"
 input_catatan = "xpath=//textarea[@name='notes']"
 btn_selanjutnya = "xpath=//button[contains(text(), 'Selanjutnya')]"
+
+#Edit Objek Lelang
+No_Stok_Edit="00004927"
+input_search_stok = "xpath=//input[@placeholder='Search...']"
+btn_action_dropdown = "xpath=//table//tbody//tr[1]//button[contains(@aria-label, 'view')]/following-sibling::button"
+btn_edit_menuitem = "xpath=//div[@role='menuitem' and contains(., 'edit')]"
+Edit_Ram_val="16GB"
+Edit_Warna="MERAH MARUN"
+Edit_catetan="Hai Edit"
+input_dropdown_warna = "xpath=//input[@value='BIRU' or contains(@value, 'BIRU')]/parent::div"
+option_warna_merah_marun = "xpath=//div[@role='dialog']//button[.//span[text()='MERAH MARUN']]"
+Option_Edit="AVAILABLE"
+Edit_Tanggal_Garansi="12082026"
 
 #error Message
 error_msg_wajib_diisi = "xpath=//p[contains(@class, 'text-danger') and text()='Wajib diisi']"
@@ -69,6 +82,7 @@ btn_ya_konfirmasi = "xpath=//button[contains(text(), 'Ya, Konfirmasi')]"
 #verifikasi Notifikasi
 toast_success_title = "xpath=//li[@data-type='success']//div[@data-title and contains(text(), 'Berhasil menambah objek lelang!')]"
 Success_msg = "Berhasil menambah objek lelang!"
+toast_success_edit = "xpath=//li[@data-sonner-toast and .//div[@data-title and contains(text(), 'Berhasil update objek lelang!')]]"
 
 #input unit Objek Lelang
 seller_Id= "00001040"

@@ -753,3 +753,114 @@ Verify Unsupported File Format In Tab Dokumen
     
     Wait Until Page Contains Element    ${error_msg_invalid_file_type}  timeout=10s
     Log                              SUCCESS: Alert 'Tipe file tidak valid.' berhasil terdeteksi!
+
+Search Edit Objek Lelang
+    [Arguments]    ${no_stok}=${No_Stok_Edit}
+
+    Wait Until Element Is Visible    ${input_search_stok}             timeout=10s
+    Clear Element Text               ${input_search_stok}
+    Input Text                       ${input_search_stok}             ${no_stok}
+    Press Keys                       ${input_search_stok}             RETURN
+    Sleep    1.5s
+
+    Wait Until Element Is Visible    ${btn_action_dropdown}           timeout=10s
+    Scroll Element Into View         ${btn_action_dropdown}
+    
+    Click Element                    ${btn_action_dropdown}
+    Sleep    0.8s
+
+    Wait Until Page Contains Element    ${btn_edit_menuitem}          timeout=10s
+    ${el_edit}=                         Get Web Element               ${btn_edit_menuitem}
+    Execute Javascript                  arguments[0].click();         ARGUMENTS    ${el_edit}
+    Sleep    1s
+
+Edit Objek Lelang Unit
+    [Arguments]     ${text_catatan}=${Edit_catetan}    ${ram_val}=${Edit_Ram_val}    ${warna_name}=${Edit_Warna}
+    Wait Until Element Is Visible    ${input_ram}                    timeout=10s
+    Scroll Element Into View         ${input_ram}
+    Clear Element Text               ${input_ram}
+    Input Text                       ${input_ram}                    ${ram_val}
+    Sleep    0.5s
+
+    Wait Until Element Is Visible    ${dropdown_warna}               timeout=10s
+    Scroll Element Into View         ${dropdown_warna}
+
+    ${el_dropdown_warna}=            Get Web Element                 ${dropdown_warna}
+    Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_dropdown_warna}
+    Sleep    1s    
+
+    ${target_warna}=                 Evaluate                        '''${option_warna_template}'''.format(warna_name='${warna_name}')
+
+    Wait Until Page Contains Element    ${target_warna}                 timeout=10s
+    ${el_warna}=                        Get Web Element                  ${target_warna}
+    Execute Javascript                  arguments[0].click();            ARGUMENTS    ${el_warna}
+    Sleep    0.5s
+
+    Wait Until Element Is Visible    ${input_catatan}               timeout=10s
+    Scroll Element Into View         ${input_catatan}
+    Input Text                       ${input_catatan}               ${text_catatan}
+    Sleep    0.5s
+
+    Wait Until Element Is Visible    ${btn_selanjutnya}              timeout=10s
+    Scroll Element Into View         ${btn_selanjutnya}
+    
+    ${el_selanjutnya}=              Get Web Element                 ${btn_selanjutnya}
+    Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_selanjutnya}
+    Sleep    1s
+
+Edit Objek Lelang Dokumen
+    [Arguments]    ${charger_opt}=${Option_Edit}    ${box_opt}=${Option_Edit}    ${garansi_opt}=${Option_Edit}     ${tgl_garansi}=${Edit_Tanggal_Garansi}
+
+    ${target_charger}=               Evaluate    '''${radio_option_template}'''.format(field_name='Charger', option_value='${charger_opt}')
+    Wait Until Element Is Visible    ${target_charger}                timeout=10s
+    Scroll Element Into View         ${target_charger}
+    ${el_charger}=                   Get Web Element                  ${target_charger}
+    Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_charger}
+    Sleep    0.3s
+
+    ${target_box}=                   Evaluate    '''${radio_option_template}'''.format(field_name='Box', option_value='${box_opt}')
+    Wait Until Element Is Visible    ${target_box}                    timeout=10s
+    Scroll Element Into View         ${target_box}
+    ${el_box}=                       Get Web Element                  ${target_box}
+    Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_box}
+    Sleep    0.3s
+
+    ${target_garansi}=               Evaluate    '''${radio_option_template}'''.format(field_name='Garansi', option_value='${garansi_opt}')
+    Wait Until Element Is Visible    ${target_garansi}                timeout=10s
+    Scroll Element Into View         ${target_garansi}
+    ${el_garansi}=                   Get Web Element                  ${target_garansi}
+    Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_garansi}
+    Sleep    0.3s
+
+    Wait Until Element Is Visible    ${input_tanggal_garansi}        timeout=10s
+    Scroll Element Into View         ${input_tanggal_garansi}
+    
+    Press Keys                       ${input_tanggal_garansi}        ${tgl_garansi}
+    Sleep    0.5s
+
+    Wait Until Element Is Visible    ${btn_selanjutnya}              timeout=10s
+    Scroll Element Into View         ${btn_selanjutnya}
+    
+    ${el_selanjutnya}=              Get Web Element                 ${btn_selanjutnya}
+    Execute Javascript               arguments[0].click();           ARGUMENTS    ${el_selanjutnya}
+    
+    Sleep    1s
+
+Submit Edit Form Objek Lelang
+    Wait Until Element Is Visible    ${btn_simpan}                   timeout=10s
+    Scroll Element Into View         ${btn_simpan}
+    
+    ${el_simpan}=                   Get Web Element                  ${btn_simpan}
+    Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_simpan}
+
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}            timeout=10s
+    Scroll Element Into View         ${btn_ya_konfirmasi}
+    ${el_konfirmasi}=               Get Web Element                  ${btn_ya_konfirmasi}
+    Execute Javascript               arguments[0].click();            ARGUMENTS    ${el_konfirmasi}
+
+    Verify Success Edit Toast Notification
+    Sleep    2s
+
+Verify Success Edit Toast Notification
+    Wait Until Element Is Visible    ${toast_success_edit}          timeout=10s
+    Log                              SUCCESS: Berhasil menemukan toast objek lelang!

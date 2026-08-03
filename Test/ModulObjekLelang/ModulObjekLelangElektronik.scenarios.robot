@@ -94,3 +94,14 @@ Execute Login Scenario
 #    Verify Unsupported File Format In Tab Dokumen
 #    Sleep   2s
 *** Test Cases ***
+Verify Update Detail Unit, Dokumen, and Foto Successfully (E2E Edit)
+    [Documentation]     TC-EDIT-002
+    Sleep   3s
+    Go To   ${BASE_URL}lelang/objek
+    Filter Objek Lelang Electronic
+    
+    Search Edit Objek Lelang
+    Edit Objek Lelang Unit
+    Edit Objek Lelang Dokumen
+    Submit Edit Form Objek Lelang
+    Sleep   1s
