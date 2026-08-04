@@ -77,6 +77,15 @@ Input Search No Stok Returned
     Clear Element Text                   ${input_search_global}
     Input Text                           ${input_search_global}           ${no_stok_value}
 
+Input Search No Stok Released
+    [Arguments]    ${no_stok_value}=${input_no_stok_released}
+
+    Wait Until Element Is Visible        ${input_search_global}           timeout=10s
+    Scroll Element Into View             ${input_search_global}
+
+    Clear Element Text                   ${input_search_global}
+    Input Text                           ${input_search_global}           ${no_stok_value}
+
 Turn On Status Aktif Menjadi Off
     Wait Until Page Contains Element    ${switch_status_aktif_on}             timeout=10s
     Scroll Element Into View            ${switch_status_aktif_on}
@@ -290,6 +299,29 @@ Select Status Unit Returned
     Scroll Element Into View             ${btn_ya_konfirmasi_returned}
     ${el_confirm}=                       Get Web Element                   ${btn_ya_konfirmasi_returned}
     Execute Javascript                   arguments[0].click();             ARGUMENTS    ${el_confirm}
+
+    Wait Until Page Contains Element    ${toast_update_status_unit_success}    timeout=10s
+    Log                                 SUCCESS: Status unit berhasil diubah ke ${status_id}!
+
+Select Status Unit Released
+    [Arguments]    ${status_id}=${status_unit_released}
+
+    Wait Until Page Contains Element    ${btn_popover_status_unit}            timeout=10s
+    Scroll Element Into View            ${btn_popover_status_unit}
+    ${el_arrow}=                        Get Web Element                       ${btn_popover_status_unit}
+    Execute Javascript                  arguments[0].click();                 ARGUMENTS    ${el_arrow}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${radio_opt_released}                 timeout=10s
+    Scroll Element Into View            ${radio_opt_released}
+    ${el_released}=                     Get Web Element                       ${radio_opt_released}
+    Execute Javascript                  arguments[0].click();                 ARGUMENTS    ${el_released}
+    Sleep                               0.5s
+
+    Wait Until Element Is Visible        ${btn_ya_konfirmasi_released}         timeout=10s
+    Scroll Element Into View             ${btn_ya_konfirmasi_released}
+    ${el_confirm}=                      Get Web Element                       ${btn_ya_konfirmasi_released}
+    Execute Javascript                  arguments[0].click();                 ARGUMENTS    ${el_confirm}
 
     Wait Until Page Contains Element    ${toast_update_status_unit_success}    timeout=10s
     Log                                 SUCCESS: Status unit berhasil diubah ke ${status_id}!
