@@ -43,6 +43,19 @@ Click Button Simpan
     Wait Until Page Contains            Berhasil menambah customer!                       timeout=10s
     Log To Console                      \n[SUCCESS] Toast notification 'Berhasil menambah customer!' berhasil terverifikasi!
 
+Click Button Simpan Edit
+    Wait Until Page Contains Element    ${btn_simpan_Edit_customer}                              timeout=10s
+    Scroll Element Into View            ${btn_simpan_Edit_customer}
+    Click Element                       ${btn_simpan_Edit_customer}
+
+    Wait Until Page Contains Element    ${btn_confirm_Edit_simpan}                                timeout=10s
+    Wait Until Element Is Visible       ${btn_confirm_Edit_simpan}                                timeout=10s
+    Scroll Element Into View            ${btn_confirm_Edit_simpan}
+    Click Element                       ${btn_confirm_Edit_simpan}
+
+    Wait Until Page Contains Element    ${toast_success_update}                                   timeout=10s
+    Wait Until Element Is Visible       ${toast_success_update}                                   timeout=10s
+
 Input Step Customer
     Wait Until Page Contains Element    ${pilih_tipe_customer}                 timeout=10s
     Scroll Element Into View            ${pilih_tipe_customer}
@@ -806,3 +819,89 @@ Verify Invalid Format KTP And NPWP Validation
     Wait Until Element Is Visible       ${txt_error_format_npwp}                          timeout=10s
     Element Text Should Be              ${txt_error_format_npwp}                           Format NPWP tidak valid
     Log To Console                      \n[SUCCESS] Pesan error 'Format NPWP tidak valid' terverifikasi.
+
+Send Password Customer
+    Wait Until Page Contains Element    ${input_search_customer}                            timeout=30s
+    Scroll Element Into View            ${input_search_customer}
+    Sleep                               0.3s
+    
+    Clear Element Text                  ${input_search_customer}
+    Input Text                          ${input_search_customer}                            ${input_no_customer}
+    Press Keys                          ${input_search_customer}                            RETURN
+    Sleep                               1s
+
+    Wait Until Page Contains Element    ${btn_view_customer}                                timeout=10s
+    Scroll Element Into View            ${btn_view_customer}
+    Sleep                               0.3s
+    Click Element                       ${btn_view_customer}
+
+    Wait Until Page Contains Element    ${btn_kirim_password}                               timeout=10s
+    Scroll Element Into View            ${btn_kirim_password}
+    Sleep                               0.3s
+    Click Element                       ${btn_kirim_password}
+
+    Wait Until Page Contains Element    ${btn_confirm_send_password}                         timeout=10s
+    Scroll Element Into View            ${btn_confirm_send_password}
+    Sleep                               0.3s
+    Click Element                       ${btn_confirm_send_password}
+
+    Wait Until Page Contains Element    ${toast_success_send_email}                          timeout=10s
+    Wait Until Element Is Visible       ${toast_success_send_email}                          timeout=10s
+    Element Should Contain              ${toast_success_send_email}                          Berhasil mengirim ke email customer!
+
+Click Edit Option From Dropdown
+    Wait Until Page Contains Element    ${btn_dropdown_aksi}                               timeout=10s
+    Scroll Element Into View            ${btn_dropdown_aksi}
+    Sleep                               0.3s
+    
+    Click Element                       ${btn_dropdown_aksi}
+    Sleep                               0.3s
+
+    Wait Until Page Contains Element    ${btn_menu_edit}                                   timeout=10s
+    Wait Until Element Is Visible       ${btn_menu_edit}                                   timeout=10s
+    Click Element                       ${btn_menu_edit}
+
+Edit Customer data
+    Wait Until Page Contains Element    ${input_search_customer}                            timeout=30s
+    Scroll Element Into View            ${input_search_customer}
+    Sleep                               0.3s
+    Clear Element Text                  ${input_search_customer}
+    Input Text                          ${input_search_customer}                            ${input_no_customer}
+    Press Keys                          ${input_search_customer}                            RETURN
+    Sleep                               1s
+
+    Click Edit Option From Dropdown
+
+    Wait Until Page Contains Element    ${input_nama_depan}                                 timeout=10s
+    Scroll Element Into View            ${input_nama_depan}
+    Clear Element Text                  ${input_nama_depan}
+    Input Text                          ${input_nama_depan}                                 ${edit_nama_depan}
+
+    Wait Until Page Contains Element    ${input_nama_belakang}                              timeout=10s
+    Clear Element Text                  ${input_nama_belakang}
+    Input Text                          ${input_nama_belakang}                              ${edit_nama_belakang}
+
+    Wait Until Page Contains Element    ${input_no_ponsel}                                  timeout=10s
+    Clear Element Text                  ${input_no_ponsel}
+    Input Text                          ${input_no_ponsel}                                  ${edit_no_telp}
+
+Edit Customer Bank
+    Wait Until Page Contains Element    ${pilih_nama_bank}                                 timeout=10s
+    Scroll Element Into View            ${pilih_nama_bank}
+    Click Element                       ${pilih_nama_bank}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${edit_value_bank}                                 timeout=10s
+    Wait Until Element Is Visible       ${edit_value_bank}                                 timeout=10s
+    Click Element                       ${edit_value_bank}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${input_nomor_rekening}                            timeout=10s
+    Scroll Element Into View            ${input_nomor_rekening}
+    Press Keys                          ${input_nomor_rekening}                            CTRL+a    BACKSPACE
+    Input Text                          ${input_nomor_rekening}                            ${edit_Rekening}
+
+    Wait Until Page Contains Element    ${input_nama_pemilik_rekening}                      timeout=10s
+    Scroll Element Into View            ${input_nama_pemilik_rekening}
+    Press Keys                          ${input_nama_pemilik_rekening}                      CTRL+a    BACKSPACE
+    Input Text                          ${input_nama_pemilik_rekening}                      ${edit_nama_pemilik}

@@ -96,6 +96,27 @@ value_jenis_lelang="xpath=//span[text()='Passenger']"
 value_other="test 1"
 value_kode_referal="test 2"
 
+#search Customer
+input_search_customer = "xpath=//input[@placeholder='Search...']"
+btn_view_customer = "xpath=//button[@aria-label='view' or .//span[text()='view']]"
+btn_kirim_password = "xpath=//button[./span[text()='Kirim Password']]"
+btn_confirm_send_password = "xpath=//button[contains(text(), 'Ya, Konfirmasi')]"
+toast_success_send_email = "xpath=//li[@data-type='success']//div[@data-title='' and contains(text(), 'Berhasil mengirim ke email customer!')]"
+input_no_customer = "00000155"
+
+#edit Customer
+btn_dropdown_aksi = "xpath=//button[@data-slot='dropdown-menu-trigger' or @aria-label='Tampilkan aksi lainnya']"
+btn_menu_edit = "xpath=//div[@role='menuitem' and contains(., 'edit')]"
+btn_simpan_Edit_customer = "xpath=//button[contains(@class, 'rounded-full') and contains(text(), 'Simpan')]"
+btn_confirm_Edit_simpan = "xpath=//button[contains(text(), 'Ya, Konfirmasi')]"
+toast_success_update = "xpath=//li[@data-type='success']//div[@data-title='' and contains(text(), 'Berhasil update customer!')]"
+edit_nama_depan = "Budi"
+edit_nama_belakang = "Updated"
+edit_no_telp = "081299998888"
+edit_value_bank="xpath=//span[text()='BNI']"
+edit_Rekening="12232123123"
+edit_nama_pemilik="Budi Setiawan"
+
 #button simpan
 btn_simpan_utama ="xpath=//button[text()='Simpan']"
 btn_simpan_popup ="xpath=//button[normalize-space(text())='Ya, Konfirmasi']"
