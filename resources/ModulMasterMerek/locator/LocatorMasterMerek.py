@@ -2,7 +2,6 @@
 tambah_merek="//button[.//div[normalize-space()='Merek']]"
 pilih_objek_lelang="//span[text()='Pilih Objek Lelang']"
 input_nama_merek="//input[@placeholder='Ketik Merek']"
-upload_logo_merek="//input[@type='file']"
 simpan_merek="//button[normalize-space()='Simpan']"
 
 #value add master merek
