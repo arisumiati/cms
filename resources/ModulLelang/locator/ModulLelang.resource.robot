@@ -588,7 +588,6 @@ Edit Data Tab Ringkasan
     Sleep                            1s
 
 Edit Data Tab Objek Lelang
-    # 1. PINDAH KE TAB OBJEK LELANG
     Wait Until Element Is Visible        ${tab_objek_lelang}                 timeout=10s
     Scroll Element Into View             ${tab_objek_lelang}
     Click Element                        ${tab_objek_lelang}
@@ -612,7 +611,6 @@ Edit Data Tab Objek Lelang
         Sleep                               1.5s
     END
 
-    # 3. ALUR TAMBAH OBJEK LELANG
     Wait Until Element Is Visible        ${tambah_objek_lelang}          timeout=10s
     Click Element                        ${tambah_objek_lelang}
     Sleep                                2s
@@ -623,18 +621,14 @@ Edit Data Tab Objek Lelang
     Click Element                        ${tambahkan_objek_lelang}    
     Sleep                                2s
 
-    # 4. LOGIKA DINAMIS: CEK JUMLAH BARIS REAL & SET NO LOT
     ${lot_inputs_raw}=      Set Variable    //table//tbody/tr//input[@type='number']
     Wait Until Page Contains Element    xpath=${lot_inputs_raw}          timeout=10s
     ${lot_inputs}=          Get Web Elements                             xpath=${lot_inputs_raw}
     
-    # Hitung TOTAL BARIS AKTIF di tabel saat ini
     ${total_rows}=          Get Length                                   ${lot_inputs}
 
-    # Nilai No Lot baru disesuaikan dengan total baris yang ada di tabel
     ${next_lot}=            Set Variable                                 ${total_rows}
 
-    # Targetkan input No Lot di BARIS PALING BELAKANG / TERAKHIR
     ${target_lot_xpath}=    Set Variable    (${lot_inputs_raw})[${total_rows}]
     Wait Until Element Is Visible    xpath=${target_lot_xpath}           timeout=10s
     Scroll Element Into View         xpath=${target_lot_xpath}
