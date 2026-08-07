@@ -198,3 +198,182 @@ Verify Invalid Email Format Validation
     Wait Until Element Is Visible       ${error_email_invalid}                              timeout=10s
     
     Element Text Should Be              ${error_email_invalid}                              Email tidak valid
+
+Select Edit Action In Table
+    Wait Until Page Contains Element    ${btn_action_dropdown}                              timeout=10s
+    Wait Until Element Is Visible       ${btn_action_dropdown}                              timeout=10s
+    Scroll Element Into View            ${btn_action_dropdown}
+    Sleep                               0.3s
+    
+    Click Element                       ${btn_action_dropdown}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${btn_menu_edit}                                    timeout=10s
+    Wait Until Element Is Visible       ${btn_menu_edit}                                    timeout=10s
+    
+    Click Element                       ${btn_menu_edit}
+    Sleep                               1s
+
+Edit User
+    [Arguments]    ${search_keyword}=${value_search_NIK}
+
+    Wait Until Page Contains Element    ${search_user_table}                                timeout=30s
+    Wait Until Element Is Visible       ${search_user_table}                                timeout=10s
+    Wait Until Element Is Enabled       ${search_user_table}                                timeout=10s
+    Scroll Element Into View            ${search_user_table}
+    Sleep                               0.3s
+
+    Click Element                       ${search_user_table}
+    Clear Element Text                  ${search_user_table}
+    Input Text                          ${search_user_table}                                ${search_keyword}
+    
+    Press Keys                          ${search_user_table}                                ENTER
+    Sleep                               0.5s
+
+    Select Edit Action In Table
+    Sleep                               0.5s
+    
+Edit Field User
+    [Arguments]     ${trigger}=${trigger_tipe_login}    ${option}=${value_edit_tipe_login}     ${role_name}=CEO      ${new_phone}=${value_edit_nomor}    ${new_email}=${value_edit_mail}    ${new_firstname}=${value_edit_namaD}    ${new_lastname}=${value_edit_namaB}
+
+    Wait Until Page Contains Element    ${input_nama_depan}                                 timeout=10s
+    Wait Until Element Is Visible       ${input_nama_depan}                                 timeout=10s
+    Scroll Element Into View            ${input_nama_depan}
+    
+    Clear Element Text                  ${input_nama_depan}
+    Press Keys                          ${input_nama_depan}                                 CTRL+a    BACKSPACE
+    Input Text                          ${input_nama_depan}                                 ${new_firstname}
+
+    Wait Until Page Contains Element    ${input_nama_belakang}                              timeout=10s
+    Wait Until Element Is Visible       ${input_nama_belakang}                              timeout=10s
+    Scroll Element Into View            ${input_nama_belakang}
+    
+    Clear Element Text                  ${input_nama_belakang}
+    Press Keys                          ${input_nama_belakang}                              CTRL+a    BACKSPACE
+    Input Text                          ${input_nama_belakang}                                 ${new_lastname}
+
+    Wait Until Page Contains Element    ${input_no_HP}                                      timeout=10s
+    Wait Until Element Is Visible       ${input_no_HP}                                      timeout=10s
+    Scroll Element Into View            ${input_no_HP}
+    
+    Clear Element Text                  ${input_no_HP}
+    Press Keys                          ${input_no_HP}                                      CTRL+a    BACKSPACE
+    Input Text                          ${input_no_HP}                                      ${new_phone}
+
+    Wait Until Page Contains Element    ${input_email}                                      timeout=10s
+    Wait Until Element Is Visible       ${input_email}                                      timeout=10s
+    Scroll Element Into View            ${input_email}
+    
+    Clear Element Text                  ${input_email}
+    Press Keys                          ${input_email}                                      CTRL+a    BACKSPACE
+    Input Text                          ${input_email}                                      ${new_email}
+
+    Wait Until Page Contains Element    ${trigger_role_dropdown}                            timeout=10s
+    Wait Until Element Is Visible       ${trigger_role_dropdown}                            timeout=10s
+    Scroll Element Into View            ${trigger_role_dropdown}
+    
+    ${el_trigger}=                      Get Web Element                                     ${trigger_role_dropdown}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_trigger}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${value_edit_role}                                  timeout=10s
+    Wait Until Element Is Visible       ${value_edit_role}                                  timeout=10s
+    
+    ${el_option}=                       Get Web Element                                     ${value_edit_role}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_option}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${trigger}                                          timeout=10s
+    Wait Until Element Is Visible       ${trigger}                                          timeout=10s
+    Scroll Element Into View            ${trigger}
+    
+    ${el_trigger}=                      Get Web Element                                     ${trigger}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_trigger}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${option}                                           timeout=10s
+    Wait Until Element Is Visible       ${option}                                           timeout=10s
+    
+    ${el_option}=                       Get Web Element                                     ${option}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_option}
+    Sleep                               0.5s
+
+Edit Cancel Field User
+    [Arguments]    ${new_phone}=${value_edit_nomor}    ${new_email}=${value_edit_mail}    ${new_firstname}=${value_edit_namaD}    ${new_lastname}=${value_edit_namaB}
+
+    Wait Until Page Contains Element    ${input_nama_depan}                                 timeout=10s
+    Wait Until Element Is Visible       ${input_nama_depan}                                 timeout=10s
+    Scroll Element Into View            ${input_nama_depan}
+    
+    Clear Element Text                  ${input_nama_depan}
+    Press Keys                          ${input_nama_depan}                                 CTRL+a    BACKSPACE
+    Input Text                          ${input_nama_depan}                                 ${new_firstname}
+
+    Wait Until Page Contains Element    ${input_nama_belakang}                              timeout=10s
+    Wait Until Element Is Visible       ${input_nama_belakang}                              timeout=10s
+    Scroll Element Into View            ${input_nama_belakang}
+    
+    Clear Element Text                  ${input_nama_belakang}
+    Press Keys                          ${input_nama_belakang}                              CTRL+a    BACKSPACE
+    Input Text                          ${input_nama_belakang}                                 ${new_lastname}
+
+    Wait Until Page Contains Element    ${input_no_HP}                                      timeout=10s
+    Wait Until Element Is Visible       ${input_no_HP}                                      timeout=10s
+    Scroll Element Into View            ${input_no_HP}
+    
+    Clear Element Text                  ${input_no_HP}
+    Press Keys                          ${input_no_HP}                                      CTRL+a    BACKSPACE
+    Input Text                          ${input_no_HP}                                      ${new_phone}
+
+    Wait Until Page Contains Element    ${input_email}                                      timeout=10s
+    Wait Until Element Is Visible       ${input_email}                                      timeout=10s
+    Scroll Element Into View            ${input_email}
+    
+    Clear Element Text                  ${input_email}
+    Press Keys                          ${input_email}                                      CTRL+a    BACKSPACE
+    Input Text                          ${input_email}                                      ${new_email}
+
+Click Button Simpan Edit
+    Wait Until Page Contains Element    ${btn_simpan_edit}                                  timeout=10s
+    Wait Until Element Is Visible       ${btn_simpan_edit}                                  timeout=10s
+    Scroll Element Into View            ${btn_simpan_edit}
+    
+    ${el_simpan}=                       Get Web Element                                     ${btn_simpan_edit}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_simpan}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${btn_confirm_edit}                                 timeout=10s
+    Wait Until Element Is Visible       ${btn_confirm_edit}                                 timeout=10s
+    
+    ${el_confirm}=                      Get Web Element                                     ${btn_confirm_edit}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_confirm}
+    Sleep                               1s
+
+    Wait Until Page Contains Element    ${toast_success_edit_user}                         timeout=10s
+    Wait Until Element Is Visible       ${toast_success_edit_user}                         timeout=10s
+
+Delete Item And Confirm
+    Wait Until Page Contains Element    ${btn_delete_item}                                  timeout=10s
+    Wait Until Element Is Visible       ${btn_delete_item}                                  timeout=10s
+    
+    ${el_delete}=                       Get Web Element                                     ${btn_delete_item}
+    Execute Javascript                  arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});    ARGUMENTS    ${el_delete}
+    Sleep                               0.5s
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_delete}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${btn_confirm_delete}                               timeout=10s
+    Wait Until Element Is Visible       ${btn_confirm_delete}                               timeout=10s
+    
+    ${el_confirm}=                      Get Web Element                                     ${btn_confirm_delete}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_confirm}
+    Sleep                               1s
+
+Cancel Edit User Form And Verify Closed
+    Wait Until Page Contains Element    ${btn_batal_edit}                                   timeout=10s
+    Wait Until Element Is Visible       ${btn_batal_edit}                                   timeout=10s
+    Scroll Element Into View            ${btn_batal_edit}
+    
+    ${el_batal}=                        Get Web Element                                     ${btn_batal_edit}
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_batal}
+    Sleep                               0.5s
