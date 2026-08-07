@@ -36,7 +36,8 @@ symbol_persen="xpath://*[normalize-space(text())='%']"
 checkbox_customer_regular="xpath=//label[contains(text(),'Lelang terbuka untuk customer Regular')]/preceding-sibling::input"
 
 #input objek lelang Free Admin Fee
-checkbox_free_admin = "xpath=(//table//tbody/tr)[last()]/td[10]//*[self::input or self::button or self::label or self::div]"
+table_scroll_container = "xpath=//div[@role='dialog']//table/ancestor::div[contains(@class, 'overflow') or contains(@class, 'scroll') or contains(@class, 'auto')]"
+checkbox_free_admin = "xpath=(//div[@role='dialog']//tbody/tr)[last()]/td[count(//div[@role='dialog']//th[contains(., 'FREE ADMIN FEE')]/preceding-sibling::th)+1]//input[@type='checkbox']"
 admin_fee_container="xpath=//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/ancestor::table//tbody/tr[1]/td[position()=count(//th[contains(.,'ADMIN FEE') and not(contains(.,'FREE'))]/preceding-sibling::th)+1]"
 
 #Checkbox Rekomendasi

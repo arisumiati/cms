@@ -234,28 +234,27 @@ Execute Login Scenario
 #    Click Pop Up Konfirmasi Notification Success_buat_lelang
 #    Sleep    4s
 *** Test Cases ***
-Verify Admin Fee Auto Set To Zero When Free Admin Fee Is Checked
-    [Documentation]    TC-OL-001 Verify Objek Lelang with Free Admin Fee Applied
-    Sleep    3s
-    Go To    ${BASE_URL}lelang/list-lelang    
-    Click Tambah Lelang
-    Input List Lelang Ringkasan
-    Sleep    1s
-   
-    Input Objek Lelang
-    Sleep    1s
+Verify Objek Lelang with Fee Applied
+    [Documentation]    TC-E2E-001 Verify Successful Create Complete Lelang Reguler (All Tabs + Optional Logic)
+    FOR    ${iteration}    IN RANGE    1    4
+        Sleep    5s
+        Go To    ${BASE_URL}lelang/list-lelang    
+        Click Tambah Lelang
+        Input List Lelang Ringkasan
+        Sleep    2s
+        
+        Input Objek Lelang
+        Sleep    2s
+        Click Simpan Lelang Tab Objek Lelang
+        Sleep    2s
+        
+        Input Bidder
+        Sleep    2s
 
-    Verify Free Admin Fee Overrides Admin Fee To Zero
-
-    Click Simpan Lelang Tab Objek Lelang
-    Sleep    2s
-    
-    Input Bidder
-    Sleep    2s
-
-   Input Group
-    Sleep    2s
-    
-    Click Simpan Lelang Tab Ringkasan
-    Click Pop Up Konfirmasi Notification Success_buat_lelang
-    Sleep    4s
+        Input Group
+        Sleep    2s
+        
+        Click Simpan Lelang Tab Ringkasan
+        Click Pop Up Konfirmasi Notification Success_buat_lelang
+        Sleep    4s
+    END

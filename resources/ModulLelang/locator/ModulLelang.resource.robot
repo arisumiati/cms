@@ -391,9 +391,19 @@ Input Objek Lelang
         Sleep                            0.3s
     END
 
-    ${el_cb}=                Get Web Element           ${checkbox_free_admin}
-    Execute Javascript       arguments[0].click();     ARGUMENTS    ${el_cb}
-    Sleep                    1s
+   Wait Until Page Contains Element    ${table_scroll_container}                           timeout=10s
+    ${container}=                       Get Web Element                                     ${table_scroll_container}
+
+    Execute Javascript                  arguments[0].scrollLeft = arguments[0].scrollWidth;    ARGUMENTS    ${container}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${checkbox_free_admin}                              timeout=10s
+    ${el_cb}=                           Get Web Element                                     ${checkbox_free_admin}
+
+    Execute Javascript                  arguments[0].scrollIntoView({behavior: 'instant', block: 'center', inline: 'center'});    ARGUMENTS    ${el_cb}
+    Sleep                               0.3s
+    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_cb}
+    Sleep                               1s
 
 Click Checkbox Rekomendasi
     Wait Until Page Contains Element    ${checkbox_rekomendasi}    timeout=10s
