@@ -49,6 +49,7 @@ cari_group="xpath=//div[@role='dialog' and .//*[contains(text(), 'Tambah Custome
 ceklis_group="xpath=//div[@role='dialog' and .//*[contains(text(), 'Tambah Customer Ke Group')]]//thead//th//input[@type='checkbox']"
 simpan_group="xpath=//div[@role='dialog' and .//*[contains(text(), 'Tambah Customer Ke Group')]]//button[text()='Simpan' or contains(., 'Simpan')]"
 no_seller="00000259"
+value_kategori="Car"
 
 #notifikasi Tambah Group
 toast_create_user_success = "xpath=//li[@data-sonner-toast and contains(., 'Berhasil create data user')]"
@@ -60,30 +61,3 @@ err_msg_prefix_hp = "xpath=//p[contains(@class, 'text-danger') and contains(text
 #value input group
 value_pilih_kategori = "//div[@role='option'][normalize-space()='Bike']"
 value_cari_group = "DEALER-MYSTOCK-3"
-
-#filter
-klik_filter="//button[.//span[text()='Filter']]"
-filter_status_aktif="//span[text()='Pilih Status Aktif']"
-value_filter_status_aktif="//div[@role='option'][normalize-space()='Aktif']"
-value_filter_status_tidak_aktif="//div[@role='option'][normalize-space()='Tidak Aktif']"
-
-filter_role="//span[text()='Pilih Role']"
-value_filter_role="//div[@role='option'][normalize-space()='ADMINCSUL']"
-
-filter_nama_lengkap="//input[@placeholder='Ketik Nama Lengkap']"
-filter_email="//input[@placeholder='Ketik Email']"
-filter_group="//input[@placeholder='Ketik Group']"
-
-klik_tampilkan="//button[normalize-space()='Tampilkan']"
-
-#reset filter
-hapus_filter="//button[normalize-space()='Hapus']"
-pilih_x = "//*[name()='path' and contains(@d,'M242.72 256l100.07')]"
-
-#cari user
-input_cari_user="//input[@placeholder='Search']"
-cari_by_nama_lengkap="User Otomatis"
-cari_by_nik ="3212312312312"
-cari_by_no_hp="081234567890"
-cari_by_email="sso@mail.com"
-cari_by_nama_role="ADMINCSUL"

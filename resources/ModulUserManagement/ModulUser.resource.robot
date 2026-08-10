@@ -26,7 +26,7 @@ Click Button Simpan Grup
     Sleep                               1s
 
 Click Button Tambah Grup
-    [Arguments]      ${seller_number}=${no_seller}    ${category_name}=Car
+    [Arguments]      ${seller_number}=${no_seller}    ${category_name}=${value_kategori}
     Wait Until Page Contains Element    ${tambah_group}                              timeout=10s
     Wait Until Element Is Visible       ${tambah_group}                              timeout=10s
     Scroll Element Into View            ${tambah_group}

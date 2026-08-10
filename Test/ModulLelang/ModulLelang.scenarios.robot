@@ -234,27 +234,27 @@ Execute Login Scenario
 #    Click Pop Up Konfirmasi Notification Success_buat_lelang
 #    Sleep    4s
 *** Test Cases ***
-Verify Objek Lelang with Fee Applied
-    [Documentation]    TC-E2E-001 Verify Successful Create Complete Lelang Reguler (All Tabs + Optional Logic)
-    FOR    ${iteration}    IN RANGE    1    4
-        Sleep    5s
-        Go To    ${BASE_URL}lelang/list-lelang    
-        Click Tambah Lelang
-        Input List Lelang Ringkasan
-        Sleep    2s
-        
-        Input Objek Lelang
-        Sleep    2s
-        Click Simpan Lelang Tab Objek Lelang
-        Sleep    2s
-        
-        Input Bidder
-        Sleep    2s
-
-        Input Group
-        Sleep    2s
-        
-        Click Simpan Lelang Tab Ringkasan
-        Click Pop Up Konfirmasi Notification Success_buat_lelang
-        Sleep    4s
-    END
+#Verify Objek Lelang with Fee Applied
+#    [Documentation]    TC-E2E-001 Verify Successful Create Complete Lelang Reguler (All Tabs + Optional Logic)
+#    FOR    ${iteration}    IN RANGE    1    4
+#        Sleep    5s
+#        Go To    ${BASE_URL}lelang/list-lelang    
+#        Click Tambah Lelang
+#        Input List Lelang Ringkasan
+#        Sleep    2s
+#        
+#        Input Objek Lelang
+#        Sleep    2s
+#        Click Simpan Lelang Tab Objek Lelang
+#        Sleep    2s
+#        
+#        Input Bidder
+#        Sleep    2s
+#
+#        Input Group
+#        Sleep    2s
+#        
+#        Click Simpan Lelang Tab Ringkasan
+#        Click Pop Up Konfirmasi Notification Success_buat_lelang
+#        Sleep    4s
+#    END

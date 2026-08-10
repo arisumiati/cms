@@ -1,0 +1,22 @@
+#Filter user Management
+btn_filter = "xpath=//button[@data-slot='popover-trigger' and contains(., 'Filter')]"
+
+#input Filter
+input_filter_status = "xpath=//div[label[contains(., 'Status Aktif')]]//input | //input[@placeholder='Cari..']"
+option_filter_status_aktif = "xpath=//div[@data-radix-popper-content-wrapper]//button[contains(., 'Aktif')] | //div[@data-radix-popper-content-wrapper]//div[contains(text(), 'Aktif')] | //span[text()='Aktif']"
+input_filter_role="xpath=//*[text()='Role']/following-sibling::div//input | //*[text()='Role']/parent::div//input"
+option_filter_role_ceo = "xpath=//div[@data-radix-popper-content-wrapper]//span[text()='CEO']/ancestor::button | //div[@data-radix-popper-content-wrapper]//button[contains(., 'CEO')]"
+input_filter_nama_lengkap = "xpath=//input[@placeholder='Ketik Nama Lengkap']"
+value_nama="Tester Otomatis"
+value_partial="User"
+value_empty="Adi"
+value_injection="OR'1'='1"
+input_filter_email = "xpath=//input[@placeholder='Ketik Email']"
+value_email="PTSellerLeasingJBAHeadOffice"
+email_partial="yopmail"
+email_empty="riri"
+email_injection="<script>alert(1)</script>"
+input_filter_group = "xpath=//input[@placeholder='Ketik Group']"
+value_group="Head Office"
+btn_tampilkan_filter = "xpath=//button[@data-slot='popover-close' and contains(., 'Tampilkan')] | //button[span[text()='Tampilkan']]"
+btn_hapus_filter = "xpath=//button[@data-slot='popover-close' and contains(., 'Hapus')] | //button[span[text()='Hapus']]"
