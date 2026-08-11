@@ -13,3 +13,4 @@ btn_apply_clear = "xpath=//button[@data-slot='popover-close' and normalize-space
 input_search = "xpath=//input[@placeholder='Cari']"
 value_search="Dave"
 value_not="Halo"
+
