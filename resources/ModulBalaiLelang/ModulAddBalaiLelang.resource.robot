@@ -58,3 +58,130 @@ Search Loop Alamat Balai Lelang From Excel
 
         Sleep    1s
     END
+
+Click Button Tambah
+    Wait Until Element Is Visible    ${btn_tambah}    timeout=30s
+    Scroll Element Into View         ${btn_tambah}
+    
+    Click Element                    ${btn_tambah}
+
+Click Button Simpan Modal
+    Wait Until Element Is Visible    ${btn_simpan_modal}    timeout=30s
+    Click Element                    ${btn_simpan_modal}
+
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}        timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+
+    Wait Until Element Is Visible    ${toast_success_create}     timeout=10s
+    Page Should Contain Element      ${toast_success_create}
+
+Select Seller From Dropdown
+    [Arguments]    ${target_seller}=${seller_name}
+    
+    Wait Until Element Is Visible    ${Dropdown_seller}       timeout=30s
+    Click Element                    ${Dropdown_seller}
+    
+    Wait Until Element Is Visible    ${input_seller}      timeout=10s
+    Click Element                    ${input_seller}
+    Press Keys                       ${input_seller}      CTRL+a    BACKSPACE
+    Press Keys                       ${input_seller}      ${target_seller}
+    
+    ${opt_seller}=    Set Variable   xpath=//div[@role='option'][contains(normalize-space(), '${seller_name}')]
+    Wait Until Element Is Visible    ${opt_seller}               timeout=10s
+    Click Element                    ${opt_seller}
+
+Input Field Balai Lelang
+    Wait Until Element Is Visible    ${input_balai_lelang}          timeout=30s
+    Press Keys                       ${input_balai_lelang}          ${Value_balai_lelang}    TAB
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${input_cabang_balai_lelang}   timeout=30s
+    Press Keys                       ${input_cabang_balai_lelang}   ${value_cabang_lelang}   TAB
+    Sleep                            1s
+
+    Select Seller From Dropdown
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${textarea_alamat_balai_lelang}    timeout=30s
+    Click Element                    ${textarea_alamat_balai_lelang}
+    Press Keys                       ${textarea_alamat_balai_lelang}    CTRL+a    BACKSPACE
+    Press Keys                       ${textarea_alamat_balai_lelang}    ${val_alamat_balai_lelang}    TAB
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${textarea_catatan}                timeout=30s
+    Click Element                    ${textarea_catatan}
+    Press Keys                       ${textarea_catatan}                CTRL+a    BACKSPACE
+    Press Keys                       ${textarea_catatan}                ${val_catatan}   TAB
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${lane_car}            timeout=30s
+    Click Element                    ${lane_car}
+    
+    Wait Until Element Is Visible    ${input_disable_car}     timeout=30s
+    Click Element                    ${input_disable_car}
+    Press Keys                       ${input_disable_car}     CTRL+a    BACKSPACE
+    Press Keys                       ${input_disable_car}     ${val_lot_disable_car}    RETURN
+
+    Wait Until Element Is Visible    ${lane_bike}             timeout=30s
+    Click Element                    ${lane_bike}
+    
+    Wait Until Element Is Visible    ${input_disable_bike}    timeout=30s
+    Click Element                    ${input_disable_bike}
+    Press Keys                       ${input_disable_bike}    CTRL+a    BACKSPACE
+    Press Keys                       ${input_disable_bike}    ${val_lot_disable_bike}    RETURN
+
+Verify Mandatory Validation Errors
+    Wait Until Element Is Visible    ${btn_simpan_modal}         timeout=30s
+    Click Element                    ${btn_simpan_modal}
+
+    Wait Until Element Is Visible    ${wajib_diisi_error}    timeout=10s
+
+Verify Mandatory Validation Errors Duplication
+    Wait Until Element Is Visible    ${input_balai_lelang}          timeout=30s
+    Press Keys                       ${input_balai_lelang}          ${Value_balai_lelang}    TAB
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${input_cabang_balai_lelang}   timeout=30s
+    Press Keys                       ${input_cabang_balai_lelang}   ${value_cabang_lelang}   TAB
+    Sleep                            1s
+
+    Select Seller From Dropdown
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${textarea_alamat_balai_lelang}    timeout=30s
+    Click Element                    ${textarea_alamat_balai_lelang}
+    Press Keys                       ${textarea_alamat_balai_lelang}    CTRL+a    BACKSPACE
+    Press Keys                       ${textarea_alamat_balai_lelang}    ${val_alamat_balai_lelang}    TAB
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${textarea_catatan}                timeout=30s
+    Click Element                    ${textarea_catatan}
+    Press Keys                       ${textarea_catatan}                CTRL+a    BACKSPACE
+    Press Keys                       ${textarea_catatan}                ${val_catatan}   TAB
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${lane_car}            timeout=30s
+    Click Element                    ${lane_car}
+    
+    Wait Until Element Is Visible    ${input_disable_car}     timeout=30s
+    Click Element                    ${input_disable_car}
+    Press Keys                       ${input_disable_car}     CTRL+a    BACKSPACE
+    Press Keys                       ${input_disable_car}     ${val_lot_disable_car}    RETURN
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${lane_bike}             timeout=30s
+    Click Element                    ${lane_bike}
+    
+    Wait Until Element Is Visible    ${input_disable_bike}    timeout=30s
+    Click Element                    ${input_disable_bike}
+    Press Keys                       ${input_disable_bike}    CTRL+a    BACKSPACE
+    Press Keys                       ${input_disable_bike}    ${val_lot_disable_bike}    RETURN
+
+     Wait Until Element Is Visible    ${btn_simpan_modal}    timeout=30s
+    Click Element                    ${btn_simpan_modal}
+
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}        timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+
+    Wait Until Element Is Visible    ${toast_error_duplicate}     timeout=10s
+    Page Should Contain Element      ${toast_error_duplicate}
