@@ -2,7 +2,7 @@
 Documentation  modul bidding log
 Library  SeleniumLibrary
 Resource          ../../resources/ModulLogin/login_suite.robot
-Resource          ../../resources/ModulMasterLelang/ModulAddMasterLelang.resource.robot
+Resource          ../../resources/ModulBalaiLelang/ModulAddBalaiLelang.resource.robot
 Suite Setup        Run Keywords    Execute Login Scenario
 
 *** Keywords ***

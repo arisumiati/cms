@@ -6,7 +6,7 @@ Library    DateTime
 Library    OperatingSystem
 Library    XML
 Library    excel_helper.py
-Variables  ../../resources/ModulMasterLelang/LocatorAddMasterLelang.py
+Variables  ../../resources/ModulBalaiLelang/LocatorAddBalaiLelang.py
 
 *** Keywords ***
 Search Loop Alamat Balai Lelang From Excel
