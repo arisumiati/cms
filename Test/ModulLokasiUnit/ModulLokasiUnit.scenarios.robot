@@ -36,3 +36,18 @@ Verify Duplicate Kode Lokasi Unit Input
     Input Lokasi Unit Details
     Validasi Toast Error Duplicate Pool Code
     Sleep    1s
+
+Verify Validation Text for Empty
+    [documentation]  TC-BL-004
+    Sleep    3s
+    Go To    ${BASE_URL}master-data/lokasi-unit
+    Klik Button Tambah
+    Validasi Error Mandatory Specific Fields
+    Sleep    1s 
+
+Verify Validation Text for Invalid Length
+    [documentation]  TC-BL-005
+    Sleep    3s
+    Go To    ${BASE_URL}master-data/lokasi-unit
+    Klik Button Tambah
+    Validasi Error Format Nomor PIC

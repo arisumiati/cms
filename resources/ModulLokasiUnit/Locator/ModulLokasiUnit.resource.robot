@@ -84,3 +84,23 @@ Validasi Toast Error Duplicate Pool Code
     Wait Until Element Is Visible        ${toast_error_duplicate_pool_code}    timeout=10s
     Wait Until Element Is Not Visible    ${toast_error_duplicate_pool_code}    timeout=10s
     Sleep    0.5s
+
+Validasi Error Mandatory Specific Fields
+    Wait Until Element Is Visible    ${simpan_lokasi_unit}    timeout=10s
+    Click Element                    ${simpan_lokasi_unit}
+
+    Wait Until Element Is Visible    ${err_msg_kode_lokasi}    timeout=10s
+    Wait Until Element Is Visible    ${err_msg_lokasi_unit}    timeout=10s
+    Wait Until Element Is Visible    ${err_msg_alamat}         timeout=10s
+    Sleep                            0.5s
+
+Validasi Error Format Nomor PIC
+    Wait Until Element Is Visible    ${input_nomor_pic}    timeout=10s
+    Click Element                    ${input_nomor_pic}
+    Press Keys                       ${input_nomor_pic}    CTRL+a    BACKSPACE
+    Input Text                       ${input_nomor_pic}    ${nomor_pic_invalid}
+
+    Wait Until Element Is Visible    ${simpan_lokasi_unit}   timeout=10s
+    Click Element                    ${simpan_lokasi_unit}
+
+    Wait Until Element Is Visible    ${err_msg_invalid_nomor_pic}    timeout=10s
