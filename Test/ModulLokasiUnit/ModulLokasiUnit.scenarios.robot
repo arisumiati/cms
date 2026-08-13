@@ -11,12 +11,28 @@ Execute Login Scenario
     Login Scenario
 
 *** Test Cases ***
-Add Modul Lokasi Unit
-    [documentation]  This test case verifies that user is able to add new category seller
-    [tags]  add
+Verify Create Lokasi Unit with All Valid Data
+    [documentation]  TC-BL-001
     Sleep    3s
-    Go To    ${BASE_URL}v2/auction-pools
-    Click Button Add New Tambah Lokasi
+    Go To    ${BASE_URL}master-data/lokasi-unit
+    Klik Button Tambah
     Input Lokasi Unit Details
-    Click Button Ya Simpan Lokasi Unit
-    Click Button Ya Mengerti
+    Klik Button Simpan 
+    Sleep    1s
+
+Verify Mandatory Field Validation
+    [documentation]  TC-BL-002
+    Sleep    3s
+    Go To    ${BASE_URL}master-data/lokasi-unit
+    Klik Button Tambah
+    Validasi Error Mandatory Field
+    Sleep    1s
+
+Verify Duplicate Kode Lokasi Unit Input
+    [documentation]  TC-BL-003
+    Sleep    3s
+    Go To    ${BASE_URL}master-data/lokasi-unit
+    Klik Button Tambah
+    Input Lokasi Unit Details
+    Validasi Toast Error Duplicate Pool Code
+    Sleep    1s
