@@ -10,32 +10,37 @@ Execute Login Scenario
     Login Scenario
 
 *** Test Cases ***
-# Add Master Warna Successfully
-#     [documentation]  This test case verifies that user is able to add master warna
-#     [tags]  add
-#     Sleep    3s
-#     Go To    ${BASE_URL}v2/colors
-#     Click Button Add New Warna
-#     Click Button Ya Simpan Warna
-#     Click Button Ya Mengerti Warna
-
-All Filter Successfully
-    [documentation]  This test case verifies that user is able to filter master warna by kode
-    [tags]  filter
+Verify Create Warna with All Valid Data
+    [Documentation]     TC-TW-001
     Sleep    3s
-    Go To    ${BASE_URL}v2/colors
-    Click Button Filter Warna
-    Click Elenent Select Filter Warna
-    Click Button Filter Warna
-    Click Hapus Filter Warna
+    Go To    ${BASE_URL}master-data/colors
+    Klik Button Tambah Data
+    Input Tambah Warna
+    Klik Simpan Data
+    Sleep    1s
 
-Seach Master Warna By Kode Successfully
-    search Warna By Kode
-
-Kombinasi Filter dan Search Warna Successfully
-    [documentation]  This test case verifies that user is able to kombinasi filter dan search warna
-    [tags]  kombinasi
+Verify Validation Text for Empty Mandatory Fields
+    [Documentation]     TC-TW-002
     Sleep    3s
-    Go To    ${BASE_URL}v2/colors
-    Click Elenent Select Filter Warna
-    search Warna By Kode
+    Go To    ${BASE_URL}master-data/colors
+    Klik Button Tambah Data
+    Validasi Error Mandatory Fields
+    Sleep    1s
+
+Verify Hex Warna Invalid Format
+    [Documentation]     TC-TW-003
+    Sleep    3s
+    Go To    ${BASE_URL}master-data/colors
+    Klik Button Tambah Data
+    Input Error Hex Warna Fields
+    Klik Simpan Data Invalid
+    Sleep    1s
+
+Verify Duplicate Kode Warna Validation
+    [Documentation]     TC-TW-004
+    Sleep    3s
+    Go To    ${BASE_URL}master-data/colors
+    Klik Button Tambah Data
+    Input Tambah Warna
+    Klik Simpan Kode Warna Duplicate
+    Sleep    1s
