@@ -1,0 +1,25 @@
+#add BlackList Customer
+btn_tambah_data ="xpath=//button[@data-slot='button' and contains(., 'Tambah')]"
+input_no_ponsel = "xpath=//input[@name='phone']"
+input_email = "xpath=//input[@name='email']"
+input_nik = "xpath=(//input[@inputmode='numeric'])[1]"
+input_npwp = "xpath=(//input[@inputmode='numeric'])[2]"
+dropdown_nama_bank ="xpath=//button[@role='combobox' and @aria-label='Nama Bank']"
+option_bank_mandiri = "xpath=//*[@role='option' and contains(., 'Mandiri')] | //div[@data-radix-collection-item and contains(., 'Mandiri')]"
+input_nomor_rekening = "xpath=//input[@name='bankAccountNumber']"
+input_notes = "xpath=//textarea[@name='notes']"
+btn_simpan = "xpath=//button[@data-slot='button' and text()='Simpan']"
+btn_ya_konfirmasi = "xpath=//button[contains(., 'Ya, Konfirmasi')]"
+toast_success_blacklist_customer = "xpath=//li[@data-type='success']//div[contains(text(), 'Sukses menambahkan blacklist customer!')]"
+toast_error_duplicate_blacklist = "xpath=//li[@data-type='error']//div[contains(text(), 'Data blacklist sudah ada')]"
+err_format_nik_invalid = "xpath=//p[contains(@class, 'text-danger') and text()='Format NIK tidak valid']"
+err_format_npwp_invalid = "xpath=//p[contains(@class, 'text-danger') and text()='Format NPWP tidak valid']"
+
+
+#input BlackList Customer
+no_hp="082246164369"
+email_address="onlytestreg1@yopmail.com"
+nik="1111111111111111"
+npwp="222222222222222"
+no_rekening="162747471"
+notes="Hallo"
