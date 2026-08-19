@@ -8,89 +8,84 @@ Library    XML
 Variables  ../locator/LocatorMasterMerek.py
 
 * Keywords *
-#add new master merek
-Click Button Add New Merek
-    Click Button  ${tambah_merek}
+Klik Button Tambah
+    Wait Until Element Is Visible    ${btn_tambah}    timeout=30s
+    Wait Until Element Is Enabled    ${btn_tambah}    timeout=10s
+    Click Element                    ${btn_tambah}
+    Sleep                            0.5s
 
-Input Merek Details
-    Click Element  ${pilih_objek_lelang}    
-    Click Element  ${value_objek_lelang}
-    Input Text  ${input_nama_merek}   ${value_nama_merek}
-    Choose File  ${upload_logo_merek}    ${value_logo_merek}
-
-Click Button Ya Simpan Merek
-    Click Button  ${simpan_merek}
-
-Click Button Ya Mengerti
-    Click Button  ${konfirmasi_ya}
-
-#filter master merek
-Click Button Filter Merek
-    Click Button  ${filter_merek}
-
-Click Filter Objek Lelang
-    Click Element  ${filter_objek_lelang_dropdown}    
-    Click Element  ${value_filter_objek_lelang}
-
-Click Filter Status Aktif
-    Click Element  ${filter_status_merek_dropdown}    
-    Click Element  ${value_filter_status_aktif}
-
-Click Filter Status Inaktif
-    Click Element  ${filter_status_merek_dropdown}    
-    Click Element  ${value_filter_status_tidak_aktif}
-
-Click Filter Merek
-    Input Text    ${filter_nama_merek_dropdown}    ${value_filter_nama_merek}
-
-Click Button Terapkan Filter
-    Click Button  ${klik_tampilkan}
-
-Click Hapus Filter Merek
-    Click Button  ${hapus_filter}
-
-#search master merek
-Input Search Merek
-    #by objek lelang
-    Input Text  ${input_search_merek}   ${search_objek_lelang}
-    Click Element  ${pilih_X}
-
-    #by nama
-    input Text  ${input_search_merek}   ${search_nama_merek}
-    Click Element  ${pilih_X}
-
-#delete master merek
-Click Button Delete
-    Input Text  ${input_search_merek}    testkeun
-
-    Click Element  ${klik_aksi}
-
-    Click Button  ${delete_merek}
-
-Kondirmasi Delete Merek
-    Click Button  ${konfirmasi_ya}
-
-#edit master merek
-Click Button Edit Merek
-    Input Text  ${input_search_merek}    BMW
-
-    Click Button  ${edit_merek}
-
-    input Text  ${input_nama_merek}   ${edit_nama_merek}
-
-Click Button Ya Ubah Merek
-    Click Button  ${konfirmasi_ya}
-
-#ubah status active master merek
-Click status Active Merek
-    Checkbox Should Be Selected    ${ubah_status_aktif}
-
-#ubah status inactive master merek
-Click status Inactive Merek
-    Checkbox Should Be Selected   ${status_tidak_aktif}
-
-#download master merek
-Click button download Merek
-    Click Button  ${download_merek}
+Klik Simpan Merk
+    Wait Until Element Is Visible    ${btn_simpan}           timeout=10s
+    Wait Until Element Is Enabled    ${btn_simpan}           timeout=10s
+    Click Element                    ${btn_simpan}
     
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+    Sleep                            0.5s
 
+    Wait Until Element Is Visible        ${toast_success_create_merek}    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_success_create_merek}    timeout=10s
+    Sleep    0.5s
+
+Klik Simpan Merk Duplicate
+    Wait Until Element Is Visible    ${btn_simpan}           timeout=10s
+    Wait Until Element Is Enabled    ${btn_simpan}           timeout=10s
+    Click Element                    ${btn_simpan}
+    
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible        ${toast_error_duplicate_merek}    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_error_duplicate_merek}    timeout=10s
+    Sleep    0.5s
+
+Pilih Objek Lelang Car
+    Wait Until Element Is Visible    ${dropdown_objek_lelang}          timeout=10s
+    Click Element                    ${dropdown_objek_lelang}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${input_search_objek_lelang}   timeout=10s
+    Click Element                    ${input_search_objek_lelang}
+    Input Text                       ${input_search_objek_lelang}   ${input_objek}
+    Sleep                            1s
+
+    Wait Until Element Is Visible    ${option_objek_lelang_car}        timeout=10s
+    Click Element                    ${option_objek_lelang_car}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible    ${input_nama_merek}    timeout=10s
+    Click Element                    ${input_nama_merek}
+    Press Keys                       ${input_nama_merek}    CTRL+a    BACKSPACE
+    Input Text                       ${input_nama_merek}    ${value_merk}
+    Sleep                            0.5s
+
+    Wait Until Page Contains Element    ${input_upload_file_merek}    timeout=10s
+    Choose File                         ${input_upload_file_merek}    ${IMAGE_PATH}
+    Sleep                               1s
+
+Validasi Pesan Error Wajib Diisi
+    Wait Until Element Is Visible    ${btn_simpan}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_simpan}    timeout=10s
+    Click Element                    ${btn_simpan}
+    
+    Wait Until Element Is Visible    ${msg_error_wajib_diisi}    timeout=10s
+    Page Should Contain Element      ${msg_error_wajib_diisi}
+
+Validasi Pesan Error Tipe File Tidak Valid
+    Wait Until Page Contains Element    ${input_upload_file_merek}    timeout=10s
+    Choose File                         ${input_upload_file_merek}    ${INVALID_FILE}
+    Sleep                               1s
+    
+    Wait Until Element Is Visible    ${msg_error_invalid_file}    timeout=10s
+    Element Text Should Be           ${msg_error_invalid_file}    Tipe file tidak valid.
+
+Upload Oversized File Merek
+    Wait Until Page Contains Element    ${input_upload_file_merek}    timeout=10s   
+    Choose File                         ${input_upload_file_merek}    ${LARGE_IMAGE_FILE}
+    Sleep                               1s
+    
+    Wait Until Element Is Visible    ${msg_error_max_file_size}    timeout=10s
+    Element Text Should Be           ${msg_error_max_file_size}    Maximal file upload 2MB
