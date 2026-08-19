@@ -1,0 +1,22 @@
+#Search Model
+input_search_merek = "xpath=//input[@placeholder='Search...']"
+nama_merk="XPANDER"
+nama_merk_invalid="UNKNOWN_MODEL"
+
+#Filter Model
+btn_filter = "xpath=//button[@data-slot='popover-trigger' and contains(., 'Filter')]"
+btn_tampilkan_filter = "xpath=//button[@data-slot='popover-close' and contains(., 'Tampilkan')]"
+input_search_popover = "xpath=(//div[@role='dialog'])[last()]//input[@placeholder='Cari..']"
+opt_status_aktif = "xpath=(//div[@role='dialog'])[last()]//button[.//span[text()='Aktif']]"
+option_status="Aktif"
+dd_objek_lelang_filter_trigger = "xpath=//input[@value='Pilih Objek Lelang']"
+input_search_popover = "xpath=(//div[@role='dialog'])[last()]//input[@placeholder='Cari..']"
+opt_objek_lelang_car_filter = "xpath=(//div[@role='dialog'])[last()]//button[.//span[text()='Car']]"
+option_objek="Car"
+dd_merek_filter_trigger = "xpath=//input[@value='Pilih Merek']"
+input_search_popover = "xpath=(//div[@role='dialog'])[last()]//input[@placeholder='Cari..']"
+opt_merek_mitsubishi_filter = "xpath=(//div[@role='dialog'])[last()]//button[.//span[text()='MITSUBISHI']]"
+option_merek="MITSUBISHI"
+input_model_filter = "xpath=//input[@placeholder='Ketik Model']"
+nama_model="XPANDER"
+btn_hapus_filter = "xpath=//button[@data-slot='popover-close' and contains(., 'Hapus')]"
