@@ -9,7 +9,7 @@ input_search_objek_lelang = "xpath=//input[@placeholder='Cari..']"
 option_objek_lelang_car = "xpath=//button[contains(., 'Car')]"
 input_objek="Car"
 input_nama_merek = "xpath=//input[@name='name']"
-value_merk="Test Auto"
+value_merk= "Test Auto"
 input_upload_file_merek ="xpath=//div[@role='dialog']//input[@type='file']"
 IMAGE_PATH = os.path.abspath(r"c:\Users\msi80\Downloads\logo_toyota.png")
 btn_simpan = "xpath=//button[text()='Simpan']"
