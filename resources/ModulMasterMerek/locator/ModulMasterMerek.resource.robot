@@ -8,6 +8,56 @@ Library    XML
 Variables  ../locator/LocatorMasterMerek.py
 
 * Keywords *
+Search Data Merek
+    Wait Until Element Is Visible    ${input_search_tabel}    timeout=30s
+    Click Element                    ${input_search_tabel}
+    Press Keys                       ${input_search_tabel}    CTRL+a    BACKSPACE
+    Input Text                       ${input_search_tabel}    ${value_merk}
+    Press Keys                       ${input_search_tabel}    ENTER
+    Sleep                            1s
+
+Klik Button Edit
+    Wait Until Element Is Visible    ${btn_edit_merek}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_edit_merek}    timeout=10s
+    Click Element                    ${btn_edit_merek}
+    Sleep                            0.5s
+
+Hapus Gambar 
+    Wait Until Element Is Visible    ${btn_delete_gambar_merek}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_delete_gambar_merek}    timeout=10s
+    Click Element                    ${btn_delete_gambar_merek}
+    Sleep                            0.5s
+
+Input Edit Merek
+    Wait Until Element Is Visible    ${input_nama_merek}    timeout=10s
+    Click Element                    ${input_nama_merek}
+    
+    Press Keys                       ${input_nama_merek}    CTRL+a    BACKSPACE
+    
+    Input Text                       ${input_nama_merek}    ${edit_merk}
+    Sleep                            0.5s
+
+    Hapus Gambar 
+    Sleep                            0.5s
+
+    Wait Until Page Contains Element    ${input_upload_file_merek}    timeout=10s
+    Choose File                         ${input_upload_file_merek}    ${EDIT_FILE}
+    Sleep                               1s
+
+Klik Simpan Edit Merk
+    Wait Until Element Is Visible    ${btn_simpan}           timeout=10s
+    Wait Until Element Is Enabled    ${btn_simpan}           timeout=10s
+    Click Element                    ${btn_simpan}
+    
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible        ${toast_success_update_merek }    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_success_update_merek }    timeout=10s
+    Sleep    0.5s
+
 Klik Button Tambah
     Wait Until Element Is Visible    ${btn_tambah}    timeout=30s
     Wait Until Element Is Enabled    ${btn_tambah}    timeout=10s

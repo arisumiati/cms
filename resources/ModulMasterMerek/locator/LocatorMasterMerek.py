@@ -21,3 +21,11 @@ msg_error_invalid_file = "xpath=//p[contains(@class, 'text-red-500') and text()=
 LARGE_IMAGE_FILE = os.path.abspath(r"c:\Users\msi80\Downloads\sample_3mb.png")
 msg_error_max_file_size = "xpath=//p[contains(@class, 'text-red-500') and text()='Maximal file upload 2MB']"
 toast_error_duplicate_merek = "xpath=//li[@data-type='error']//div[text()='Nama merek sudah digunakan untuk objek lelang ini']"
+
+#edit Merek
+input_search_tabel = "xpath=//input[@placeholder='Search...']"
+btn_edit_merek = "xpath=//button[@aria-label='edit']"
+edit_merk=" TESTEDIT"
+btn_delete_gambar_merek = "xpath=//div[@role='dialog']//button[.//span[text()='delete']]"
+EDIT_FILE = os.path.abspath(r"c:\Users\msi80\Downloads\sa1.jpeg")
+toast_success_update_merek = "xpath=//li[@data-type='success']//div[text()='Berhasil update data merek']"
