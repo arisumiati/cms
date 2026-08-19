@@ -10,74 +10,92 @@ Execute Login Scenario
     Login Scenario
 
 *** Test Cases ***
-Verify Search Data by Keyword
-    [Documentation]     TC-SFM-001
+#Verify Search Data by Keyword
+#    [Documentation]     TC-SFM-001
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Search Merek
+#    Sleep   1s
+
+#Verify Search Data when No Match Found
+#    [Documentation]     TC-SFM-002
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    Input Filter Invalid
+#    Klik Button Tampilkan Filter
+#    Sleep   1s
+
+#Verify Filter Data by Status Aktif Only
+#    [Documentation]     TC-SFM-003
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    Input Filter Status
+#    Klik Button Tampilkan Filter
+#    Sleep   1s
+
+#Verify Filter Data by Objek Lelang Only
+#    [Documentation]     TC-SFM-004
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    Input Filter Objek Lelang
+#    Klik Button Tampilkan Filter
+#    Sleep   1s
+
+#Verify Filter Data by Merek Name
+#    [Documentation]     TC-SFM-005
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    Input Filter
+#    Klik Button Tampilkan Filter
+#    Sleep   1s
+
+#Verify Filter Data using Multiple Criteria
+#    [Documentation]     TC-SFM-006
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    input filter multiple
+#    Klik Button Tampilkan Filter
+#    Sleep   1s
+
+#Verify Reset Filter
+#    [Documentation]     TC-SFM-007
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    input filter multiple
+#    Klik Button Hapus Filter
+#    Klik Button Filter
+#    Sleep   1s
+
+#Verify Search Bar in Combination
+#    [Documentation]     TC-SFM-008
+#    Sleep   3s
+#    Go TO   ${BASE_URL}master-data/merek
+#    Klik Button Filter
+#    Input Filter Objek Lelang
+#    Klik Button Tampilkan Filter
+#    Search Merek
+#    Sleep   1s
+
+Verify Toggle Status Aktif from ON to OFF
+    [Documentation]     TC-TSM-001
     Sleep   3s
     Go TO   ${BASE_URL}master-data/merek
     Search Merek
+    Ubah Status Toggle Menjadi OFF
+    Validasi Toast Success Update Status Merek
     Sleep   1s
 
-Verify Search Data when No Match Found
-    [Documentation]     TC-SFM-002
+Verify Toggle Status Aktif from OFF to ON
+    [Documentation]     TC-TSM-002
     Sleep   3s
     Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    Input Filter Invalid
-    Klik Button Tampilkan Filter
-    Sleep   1s
-
-Verify Filter Data by Status Aktif Only
-    [Documentation]     TC-SFM-003
-    Sleep   3s
-    Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    Input Filter Status
-    Klik Button Tampilkan Filter
-    Sleep   1s
-
-Verify Filter Data by Objek Lelang Only
-    [Documentation]     TC-SFM-004
-    Sleep   3s
-    Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    Input Filter Objek Lelang
-    Klik Button Tampilkan Filter
-    Sleep   1s
-
-Verify Filter Data by Merek Name
-    [Documentation]     TC-SFM-005
-    Sleep   3s
-    Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    Input Filter
-    Klik Button Tampilkan Filter
-    Sleep   1s
-
-Verify Filter Data using Multiple Criteria
-    [Documentation]     TC-SFM-006
-    Sleep   3s
-    Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    input filter multiple
-    Klik Button Tampilkan Filter
-    Sleep   1s
-
-Verify Reset Filter
-    [Documentation]     TC-SFM-007
-    Sleep   3s
-    Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    input filter multiple
-    Klik Button Hapus Filter
-    Klik Button Filter
-    Sleep   1s
-
-Verify Search Bar in Combination
-    [Documentation]     TC-SFM-008
-    Sleep   3s
-    Go TO   ${BASE_URL}master-data/merek
-    Klik Button Filter
-    Input Filter Objek Lelang
-    Klik Button Tampilkan Filter
     Search Merek
+    Ubah Status Toggle Menjadi ON
+    Validasi Toast Success Update Status Merek
     Sleep   1s

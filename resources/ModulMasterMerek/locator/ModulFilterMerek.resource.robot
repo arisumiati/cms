@@ -14,6 +14,12 @@ Klik Button Filter
     Click Element                    ${btn_filter}
     Sleep                            0.5s
 
+Klik Button Ya Konfirmasi
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+    Sleep                            0.5s
+
 Klik Button Hapus Filter
     Wait Until Element Is Visible    ${btn_hapus_filter}    timeout=10s
     Wait Until Element Is Enabled    ${btn_hapus_filter}    timeout=10s
@@ -104,3 +110,30 @@ input filter multiple
     Press Keys                       ${input_filter_merek}    CTRL+a    BACKSPACE
     Input Text                       ${input_filter_merek}    ${value_merk}
     Sleep                            0.5s
+
+Ubah Status Toggle Menjadi OFF
+    Wait Until Element Is Visible    ${btn_toggle_status}    timeout=10s
+    ${is_on}=    Run Keyword And Return Status    Page Should Contain Element    ${btn_toggle_status_on}
+    IF    ${is_on}
+        Click Element                    ${btn_toggle_status}
+        Sleep                            0.5s
+        Klik Button Ya Konfirmasi
+        
+        Wait Until Element Is Visible    ${btn_toggle_status_off}    timeout=5s
+    END
+
+Ubah Status Toggle Menjadi ON
+    Wait Until Element Is Visible    ${btn_toggle_status}    timeout=10s
+    ${is_off}=    Run Keyword And Return Status    Page Should Contain Element    ${btn_toggle_status_off}
+    IF    ${is_off}
+        Click Element                    ${btn_toggle_status}
+        Sleep                            0.5s
+        Klik Button Ya Konfirmasi
+        
+        Wait Until Element Is Visible    ${btn_toggle_status_on}     timeout=5s
+    END
+
+Validasi Toast Success Update Status Merek
+    Wait Until Element Is Visible        ${toast_success_update_status_merek}    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_success_update_status_merek}    timeout=10s
+    Sleep    0.5s
