@@ -89,3 +89,28 @@ Input Filter Model
     Press Keys                       ${input_model_filter}    CTRL+a    BACKSPACE
     Input Text                       ${input_model_filter}    ${nama_model}
     Sleep                            0.5s
+
+Klik Button Ya Konfirmasi Status
+    [Documentation]    Mengeklik tombol 'Ya, Konfirmasi' pada modal pop-up
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi_status}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi_status}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi_status}
+    Sleep                            0.5s
+
+Validasi Toast Success Update Status Model
+    [Documentation]    Memvalidasi kemunculan toast notification sukses update status model
+    Wait Until Element Is Visible        ${toast_success_update_status_model}    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_success_update_status_model}    timeout=10s
+    Sleep    0.5s
+
+Ubah Status Toggle Menjadi OFF
+    Wait Until Element Is Visible    ${btn_toggle_status_on}    timeout=10s
+    Click Element                    ${btn_toggle_status_on}
+    Klik Button Ya Konfirmasi Status
+    Validasi Toast Success Update Status Model
+
+Ubah Status Toggle Menjadi ON    
+    Wait Until Element Is Visible    ${btn_toggle_status_off}    timeout=10s
+    Click Element                    ${btn_toggle_status_off}
+    Klik Button Ya Konfirmasi Status
+    Validasi Toast Success Update Status Model

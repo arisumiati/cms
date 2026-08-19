@@ -1,6 +1,6 @@
 #Search Model
 input_search_merek = "xpath=//input[@placeholder='Search...']"
-nama_merk="XPANDER"
+nama_merk="XPANDER CROSS"
 nama_merk_invalid="UNKNOWN_MODEL"
 
 #Filter Model
@@ -20,3 +20,8 @@ option_merek="MITSUBISHI"
 input_model_filter = "xpath=//input[@placeholder='Ketik Model']"
 nama_model="XPANDER"
 btn_hapus_filter = "xpath=//button[@data-slot='popover-close' and contains(., 'Hapus')]"
+btn_toggle_status = "xpath=//button[@role='switch']"
+btn_toggle_status_on = "xpath=//button[@role='switch' and @data-state='checked']"
+btn_toggle_status_off = "xpath=//button[@role='switch' and @data-state='unchecked']"
+btn_ya_konfirmasi_status = "xpath=//button[text()='Ya, Konfirmasi']"
+toast_success_update_status_model = "xpath=//li[@data-type='success']//div[text()='Berhasil update status model']"
