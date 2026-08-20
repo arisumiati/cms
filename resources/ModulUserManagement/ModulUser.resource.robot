@@ -5,6 +5,7 @@ Library    BuiltIn
 Library    DateTime
 Library    OperatingSystem
 Library    XML
+Library    RPA.Excel.Files
 Variables  ../../resources/ModulUserManagement/LocatorModulUserManagement.py
 
 *** Keywords ***
@@ -26,51 +27,47 @@ Click Button Simpan Grup
     Sleep                               1s
 
 Click Button Tambah Grup
-    [Arguments]      ${seller_number}=${no_seller}    ${category_name}=${value_kategori}
-    Wait Until Page Contains Element    ${tambah_group}                              timeout=10s
-    Wait Until Element Is Visible       ${tambah_group}                              timeout=10s
-    Scroll Element Into View            ${tambah_group}
-    
-    ${el_tambah_reminder}=              Get Web Element                                     ${tambah_group}
-    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_tambah_reminder}
-    Sleep                               0.5s
+    [Arguments]    ${seller_number}    ${category_name}=Car
 
-    Wait Until Page Contains Element    ${pilih_kategori}                                timeout=10s
-    Scroll Element Into View            ${pilih_kategori}
-    ${el_dropdown}=                     Get Web Element                                     ${pilih_kategori}
-    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_dropdown}
-    Sleep                               0.5s
+    ${modal_open}=    Run Keyword And Return Status    Element Should Be Visible    ${cari_group}
+    IF    not ${modal_open}
+        Wait Until Page Contains Element    ${tambah_group}    timeout=10s
+        Scroll Element Into View            ${tambah_group}
+        ${el_tambah}=                       Get Web Element    ${tambah_group}
+        Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_tambah}
+        Sleep                               0.5s
+    END
 
-    ${locator_option_category}=         Set Variable                                        xpath=//div[@role='dialog']//button[.//span[text()='${category_name}']]
-    
-    Wait Until Page Contains Element    ${locator_option_category}                          timeout=10s
-    Scroll Element Into View            ${locator_option_category}
-    
-    ${el_option}=                       Get Web Element                                     ${locator_option_category}
-    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_option}
-    Sleep                               0.5s
+    ${need_select_category}=    Run Keyword And Return Status    Page Should Contain Element    ${pilih_kategori}    timeout=2s
+    IF    ${need_select_category}
+        Scroll Element Into View    ${pilih_kategori}
+        ${el_dropdown}=             Get Web Element    ${pilih_kategori}
+        Execute Javascript          arguments[0].click();    ARGUMENTS    ${el_dropdown}
+        Sleep                       0.5s
 
-    Wait Until Page Contains Element    ${cari_group}                                       timeout=10s
-    Wait Until Element Is Visible       ${cari_group}                                       timeout=10s
-    Wait Until Element Is Enabled       ${cari_group}                                       timeout=10s
+        ${locator_option_category}=    Set Variable    xpath=//div[@role='dialog']//button[.//span[contains(text(), '${category_name}')]]
+        Wait Until Page Contains Element    ${locator_option_category}    timeout=10s
+        Scroll Element Into View            ${locator_option_category}
+        ${el_option}=                       Get Web Element    ${locator_option_category}
+        Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_option}
+        Sleep                               0.5s
+    END
+
+    Wait Until Page Contains Element    ${cari_group}    timeout=10s
+    Wait Until Element Is Visible        ${cari_group}    timeout=10s
     Scroll Element Into View            ${cari_group}
-    Sleep                               0.3s
-
+    
     Click Element                       ${cari_group}
-    
-    ${el_search}=                       Get Web Element                                     ${cari_group}
-    Execute Javascript                  arguments[0].value = '';                            ARGUMENTS    ${el_search}
-    
-    Input Text                          ${cari_group}                                       ${seller_number}
+    ${el_search}=                       Get Web Element    ${cari_group}
+    Execute Javascript                  arguments[0].value = '';    ARGUMENTS    ${el_search}
+    Input Text                          ${cari_group}    ${seller_number}
     Sleep                               0.5s
 
-    Wait Until Page Contains Element    ${ceklis_group}                        timeout=10s
-    Wait Until Element Is Visible       ${ceklis_group}                        timeout=10s
+    Wait Until Page Contains Element    ${ceklis_group}    timeout=10s
+    Wait Until Element Is Visible        ${ceklis_group}    timeout=10s
     Scroll Element Into View            ${ceklis_group}
-    Sleep                               0.3s
-
-    ${el_checkbox}=                     Get Web Element                                     ${ceklis_group}
-    Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_checkbox}
+    ${el_checkbox}=                     Get Web Element    ${ceklis_group}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_checkbox}
     Sleep                               0.5s
 
     Click Button Simpan Grup
@@ -97,6 +94,99 @@ Submit Form Customer And Confirm
     Wait Until Element Is Visible       ${toast_create_user_success}                        timeout=10s
     
     Element Attribute Value Should Be   ${toast_create_user_success}    data-type           success
+
+Input User
+    [Arguments]    ${firstname}    ${lastname}    ${nik}    ${no_hp}    ${email}    ${role_name}    ${login_type}
+
+    Wait Until Page Contains Element    ${input_nama_depan}    timeout=10s
+    Wait Until Element Is Visible        ${input_nama_depan}    timeout=10s
+    Scroll Element Into View            ${input_nama_depan}
+    Input Text                          ${input_nama_depan}    ${firstname}
+    Sleep                               0.3s
+
+    Wait Until Page Contains Element    ${input_nama_belakang}    timeout=10s
+    Scroll Element Into View            ${input_nama_belakang}
+    Input Text                          ${input_nama_belakang}    ${lastname}
+    Sleep                               0.3s
+
+    Wait Until Page Contains Element    ${input_no_NIK}    timeout=10s
+    Scroll Element Into View            ${input_no_NIK}
+    Input Text                          ${input_no_NIK}    ${nik}
+    Sleep                               0.3s
+
+    Wait Until Page Contains Element    ${input_no_hp}    timeout=10s
+    Scroll Element Into View            ${input_no_hp}
+    Input Text                          ${input_no_hp}    ${no_hp}
+    Sleep                               0.3s
+
+    Wait Until Page Contains Element    ${input_email}    timeout=10s
+    Scroll Element Into View            ${input_email}
+    Input Text                          ${input_email}    ${email}
+    Sleep                               0.3s
+
+    Wait Until Page Contains Element    ${pilih_role}    timeout=10s
+    Scroll Element Into View            ${pilih_role}
+    ${el_dropdown}=                     Get Web Element    ${pilih_role}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_dropdown}
+    Sleep                               0.5s
+
+    ${locator_option_role}=             Set Variable    xpath=//div[@role='dialog']//button[.//span[contains(text(), '${role_name}')]]
+    Wait Until Page Contains Element    ${locator_option_role}    timeout=10s
+    Scroll Element Into View            ${locator_option_role}
+    ${el_option}=                       Get Web Element    ${locator_option_role}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_option}
+    Sleep                               0.5s
+
+    Wait Until Page Contains Element    ${dropdown_tipe_login}    timeout=10s
+    Scroll Element Into View            ${dropdown_tipe_login}
+    ${el_dropdown}=                     Get Web Element    ${dropdown_tipe_login}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_dropdown}
+    Sleep                               0.5s
+
+    ${locator_option_login}=            Set Variable    xpath=//div[@role='dialog']//button[.//span[contains(text(), '${login_type}')]]
+    Wait Until Page Contains Element    ${locator_option_login}    timeout=10s
+    Scroll Element Into View            ${locator_option_login}
+    ${el_option}=                       Get Web Element    ${locator_option_login}
+    Execute Javascript                  arguments[0].click();    ARGUMENTS    ${el_option}
+    Sleep                               0.5s
+
+Process Add Multiple Users From Excel
+    Open Workbook    ${excel_path_user}
+    ${users}=        Read Worksheet As Table    header=True    name=${sheet_akun_user}
+    Close Workbook
+
+    FOR    ${user}    IN    @{users}
+        Click Button Add New User
+        Sleep    0.5s
+
+        ${nik_str}=     Convert To String    ${user['No NIK']}
+        ${hp_str}=      Convert To String    ${user['No Ponsel']}
+
+        Input User
+        ...    firstname=${user['Nama Depan']}
+        ...    lastname=${user['Nama Belakang']}
+        ...    nik=${nik_str}
+        ...    no_hp=${hp_str}
+        ...    email=${user['Email']}
+        ...    role_name=${user['Nama Role']}
+        ...    login_type=${user['Tipe Login']}
+
+        ${raw_group}=       Convert To String    ${user['Group']}
+        @{group_list}=      Split To Lines       ${raw_group}
+
+        FOR    ${group_item}    IN    @{group_list}
+            ${clean_group}=    Replace String    ${group_item}    \r    ${EMPTY}
+            ${clean_group}=    Replace String    ${clean_group}   '     ${EMPTY}
+            ${clean_group}=    Strip String      ${clean_group}
+
+            IF    '${clean_group}' != '${EMPTY}'
+                Click Button Tambah Grup    seller_number=${clean_group}
+            END
+        END
+
+        Submit Form Customer And Confirm
+        Sleep    1s
+    END
 
 Input New User
     [Arguments]     ${login_type}=Internal     ${role_name}=ADMINCSUL    ${firstname}=${value_nama_depan}    ${lastname}=${value_nama_belakang}    ${nik}=${value_no_NIK}     ${no_hp}=${value_no_HP}    ${email}=${value_email}

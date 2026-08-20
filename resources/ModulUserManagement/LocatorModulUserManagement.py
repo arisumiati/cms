@@ -61,3 +61,6 @@ err_msg_prefix_hp = "xpath=//p[contains(@class, 'text-danger') and contains(text
 #value input group
 value_pilih_kategori = "//div[@role='option'][normalize-space()='Bike']"
 value_cari_group = "DEALER-MYSTOCK-3"
+
+excel_path_user=r"c:\Users\msi80\Downloads\AKUN USER.xlsx"
+sheet_akun_user="AKUN USER"
