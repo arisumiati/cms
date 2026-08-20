@@ -1,7 +1,12 @@
 #Search Tipe
 input_search_tipe = "xpath=//input[@placeholder='Search...']"
-keyword_search="110"
+keyword_search="116i AT"
 keyword_Invalid="UNKNOWN_TYPE"
+
+#switch toggle
+btn_switch_toggle_status = "xpath=(//button[@role='switch'])[1]"
+btn_ya_konfirmasi = "xpath=//button[text()='Ya, Konfirmasi']"
+toast_success_update_status_tipe = "xpath=//li[@data-type='success']//div[text()='Berhasil update status tipe']"
 
 #Filter Tipe
 btn_filter_tipe = "xpath=//button[@data-slot='popover-trigger' and contains(., 'Filter')]"

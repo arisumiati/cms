@@ -88,3 +88,19 @@ Execute Login Scenario
 #    Klik Button Tampilkan Tipe
 #    Search Data Tipe
 #    Sleep   1s
+
+Verify Toggle Status Aktif from ON to OFF
+    [Documentation]     TC-TSTP-001
+    Sleep   3s
+    Go TO   ${BASE_URL}master-data/tipe
+    Search Data Tipe
+    Ubah Toggle Switch Ke Off
+    Sleep   1s
+
+Verify Toggle Status Aktif from OFF to ON
+    [Documentation]     TC-TSTP-002
+    Sleep   3s
+    Go TO   ${BASE_URL}master-data/tipe
+    Search Data Tipe
+    Ubah Toggle Switch Ke On
+    Sleep   1s

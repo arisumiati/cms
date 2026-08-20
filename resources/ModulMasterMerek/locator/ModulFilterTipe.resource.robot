@@ -194,3 +194,41 @@ Input Filter Multiple
     Press Keys                       ${input_filter_ketik_tipe}    CTRL+a    BACKSPACE
     Input Text                       ${input_filter_ketik_tipe}    ${input_tipe}
     Sleep                            0.5s
+
+Ubah Toggle Switch Ke Off
+    Wait Until Element Is Visible    ${btn_switch_toggle_status}    timeout=10s
+    
+    ${state}=    Get Element Attribute    ${btn_switch_toggle_status}    data-state
+    
+    IF    '${state}' == 'checked'
+        Click Element    ${btn_switch_toggle_status}
+        Sleep            0.5s
+    END
+    
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible        ${toast_success_update_status_tipe}    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_success_update_status_tipe}    timeout=10s
+    Sleep    0.5s
+
+Ubah Toggle Switch Ke On
+    Wait Until Element Is Visible    ${btn_switch_toggle_status}    timeout=10s
+    
+    ${state}=    Get Element Attribute    ${btn_switch_toggle_status}    data-state
+    
+    IF    '${state}' == 'unchecked'
+        Click Element    ${btn_switch_toggle_status}
+        Sleep            0.5s
+    END
+    
+    Wait Until Element Is Visible    ${btn_ya_konfirmasi}    timeout=10s
+    Wait Until Element Is Enabled    ${btn_ya_konfirmasi}    timeout=10s
+    Click Element                    ${btn_ya_konfirmasi}
+    Sleep                            0.5s
+
+    Wait Until Element Is Visible        ${toast_success_update_status_tipe}    timeout=10s
+    Wait Until Element Is Not Visible    ${toast_success_update_status_tipe}    timeout=10s
+    Sleep    0.5s
