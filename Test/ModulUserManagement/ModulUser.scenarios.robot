@@ -11,14 +11,14 @@ Execute Login Scenario
     Login Scenario
 
 *** Test Cases ***
-Verify Successful Create User
-    [documentation]  TC-E2E-001    Tambah User
-    [tags]  add
-    Sleep    5s
-    Go To    ${BASE_URL}master-data/users
-    Click Button Add New User
-    Process Add Multiple Users From Excel
-    Sleep    1s
+#Verify Successful Create User
+#    [documentation]  TC-E2E-001    Tambah User
+#    [tags]  add
+#    Sleep    5s
+#    Go To    ${BASE_URL}master-data/users
+#    Click Button Add New User
+#   Process Add Multiple Users From Excel
+#    Sleep    1s
 
 #Validasi No Ponsel Awalan / Prefix Salah
 #    [documentation]  TC-E2E-002     Tambah User
@@ -91,3 +91,10 @@ Verify Successful Create User
 #    Edit Cancel Field User
 #    Cancel Edit User Form And Verify Closed
 #    Sleep     5s
+
+Verify Update Status by Excel
+    [documentation]     Edit user
+    Sleep     5s
+    Go To     ${BASE_URL}master-data/users
+    Process Update User Status From Excel
+    Sleep     1s

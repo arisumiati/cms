@@ -64,3 +64,9 @@ value_cari_group = "DEALER-MYSTOCK-3"
 
 excel_path_user=r"c:\Users\msi80\Downloads\AKUN USER.xlsx"
 sheet_akun_user="AKUN USER"
+
+#Edit Excel
+search_email = "xpath=//input[@placeholder='Search...']"
+switch_status_user = "xpath=//button[@role='switch']"
+btn_konfirmasi_status = "xpath=//button[contains(text(), 'Ya, Konfirmasi')]"
+toast_success_status = "xpath=//div[@data-title='' and contains(text(), 'Berhasil update status user')]"

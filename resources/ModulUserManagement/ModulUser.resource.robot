@@ -467,3 +467,56 @@ Cancel Edit User Form And Verify Closed
     ${el_batal}=                        Get Web Element                                     ${btn_batal_edit}
     Execute Javascript                  arguments[0].click();                               ARGUMENTS    ${el_batal}
     Sleep                               0.5s
+
+Update User Status By Email
+    [Arguments]    ${email}    ${target_status}
+
+    Wait Until Page Contains Element    ${search_email}    timeout=30s
+    Wait Until Element Is Visible        ${search_email}    timeout=10s
+    Click Element                       ${search_email}
+    
+    ${el_search}=                       Get Web Element    ${search_email}
+    Execute Javascript                  arguments[0].value = '';    ARGUMENTS    ${el_search}
+    Input Text                          ${search_email}    ${email}
+    Sleep                               1s
+
+    Wait Until Page Contains Element    ${switch_status_user}    timeout=10s
+    Wait Until Element Is Visible        ${switch_status_user}    timeout=10s
+    
+    ${current_state}=          Get Element Attribute    ${switch_status_user}    aria-checked
+    ${target_status_clean}=    Strip String             ${target_status}
+
+    ${need_switch}=            Set Variable             ${FALSE}
+
+    IF    '${target_status_clean}' == 'In Active' and '${current_state}' == 'true'
+        ${need_switch}=        Set Variable             ${TRUE}
+    ELSE IF    '${target_status_clean}' == 'Active' and '${current_state}' == 'false'
+        ${need_switch}=        Set Variable             ${TRUE}
+    END
+
+    IF    ${need_switch}
+        ${el_switch}=              Get Web Element    ${switch_status_user}
+        Execute Javascript        arguments[0].click();    ARGUMENTS    ${el_switch}
+        Sleep                      0.5s
+
+        Wait Until Page Contains Element    ${btn_konfirmasi_status}    timeout=10s
+        Wait Until Element Is Visible        ${btn_konfirmasi_status}    timeout=10s
+        ${el_confirm}=             Get Web Element    ${btn_konfirmasi_status}
+        Execute Javascript        arguments[0].click();    ARGUMENTS    ${el_confirm}
+
+        Wait Until Page Contains Element    ${toast_success_status}    timeout=10s
+        Wait Until Element Is Visible        ${toast_success_status}    timeout=10s
+        
+        Sleep                      1.5s
+    END
+
+Process Update User Status From Excel
+    Open Workbook    ${excel_path_user}
+    ${users}=        Read Worksheet As Table    header=True    name=${sheet_akun_user}
+    Close Workbook
+
+    FOR    ${user}    IN    @{users}
+        Update User Status By Email
+        ...    email=${user['Email']}
+        ...    target_status=${user['Status']}
+    END
