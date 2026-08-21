@@ -7,3 +7,6 @@ Variables    ../../config/dev_config_cms.py
 Login Scenario
     [Tags]    login
     Login    ${user_login}    ${pass_login}
+
+Login Scenario Invalid
+    Login   ${user_invalid}     ${pass_invalid}

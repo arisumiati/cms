@@ -70,3 +70,7 @@ search_email = "xpath=//input[@placeholder='Search...']"
 switch_status_user = "xpath=//button[@role='switch']"
 btn_konfirmasi_status = "xpath=//button[contains(text(), 'Ya, Konfirmasi')]"
 toast_success_status = "xpath=//div[@data-title='' and contains(text(), 'Berhasil update status user')]"
+
+#Validasi Login
+error_msg_login = "xpath=//p[contains(@class, 'text-red-500') and contains(text(), 'Wrong Email or Password!')]"
+toast_success_login = "xpath=//div[@data-title='' and contains(text(), 'Login berhasil')]"

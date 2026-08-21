@@ -520,3 +520,12 @@ Process Update User Status From Excel
         ...    email=${user['Email']}
         ...    target_status=${user['Status']}
     END
+
+Verify Login Error Message Appears
+    Wait Until Page Contains Element    ${error_msg_login}    timeout=10s
+    Wait Until Element Is Visible        ${error_msg_login}    timeout=10s
+    Element Text Should Be              ${error_msg_login}    Wrong Email or Password!
+
+Verify Login Success Message
+    Wait Until Page Contains Element    ${toast_success_login}    timeout=10s
+    Wait Until Element Is Visible        ${toast_success_login}    timeout=10s
